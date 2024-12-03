@@ -66,11 +66,6 @@ class SuperiorityController extends Controller
     public function destroy($id)
     {
         $data = Superiority::findOrFail($id);
-
-        if (file_exists(public_path('uploads/superioritys/' . $data->path))) {
-            unlink(public_path('uploads/superioritys/' . $data->path));
-        }
-
         $data->delete();
 
         return redirect()->back()->with('success', 'Data deleted successfully.');

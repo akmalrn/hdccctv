@@ -1,565 +1,378 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
-    <meta charset="utf-8">
-    @if (!empty($blog->title))
-        <title>{{ $blog->title }}</title>
-    @elseif ($configuration->title)
-        <title>{{ $configuration->title }}</title>
-    @else
-        <title>Website</title>
-    @endif
-    <!-- Stylesheets -->
-    <link href="{{ asset('css/bootstrap.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/style.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/responsive.css') }}" rel="stylesheet">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{{ $configuration->title ?? '' }}</title>
+    <!-- favicons Icons -->
+    <link rel="apple-touch-icon" sizes="180x180" href="assetsfront/images/favicons/apple-touch-icon.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ asset($configuration->path_logo ?? '') }}" />
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ asset($configuration->path_logo ?? '') }}" />
 
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;300;400;500;600;700;800;900&display=swap"
+    <link rel="manifest" href="assetsfront/images/favicons/site.webmanifest" />
+    <meta name="description" content="{{ $configuration->meta_descriptions ?? '' }} " />
+    <meta name="keywords" content="{{ $configuration->meta_keywords ?? '' }}" />
+
+    <!-- fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400;1,500;1,700&display=swap"
         rel="stylesheet">
-    @if (!empty($blog->descriptions))
-        <meta name="description" content="{{ $blog->descriptions }}">
-    @else
-        <meta name="description" content="{{ $configuration->meta_descriptions }}">
-    @endif
 
-    @if (!empty($blog->keywords))
-        <meta name="keywords" content="{{ $blog->keywords }}">
-    @else
-        <meta name="keywords" content="{{ $configuration->meta_keywords }}">
-    @endif
+    <link rel="stylesheet" href="{{ asset('assetsfront/vendors/bootstrap/css/bootstrap.min.css') }}" />
+    <link rel="stylesheet" href="{{ asset('assetsfront/vendors/animate/animate.min.css') }}" />
+    <link rel="stylesheet" href="{{ asset('assetsfront/vendors/animate/custom-animate.css') }}" />
+    <link rel="stylesheet" href="{{ asset('assetsfront/vendors/fontawesome/css/all.min.css') }}" />
+    <link rel="stylesheet" href="{{ asset('assetsfront/vendors/jarallax/jarallax.css') }}" />
+    <link rel="stylesheet" href="{{ asset('assetsfront/vendors/jquery-magnific-popup/jquery.magnific-popup.css') }}" />
+    <link rel="stylesheet" href="{{ asset('assetsfront/vendors/nouislider/nouislider.min.css') }}" />
+    <link rel="stylesheet" href="{{ asset('assetsfront/vendors/nouislider/nouislider.pips.css') }}" />
+    <link rel="stylesheet" href="{{ asset('assetsfront/vendors/odometer/odometer.min.css') }}" />
+    <link rel="stylesheet" href="{{ asset('assetsfront/vendors/swiper/swiper.min.css') }}" />
+    <link rel="stylesheet" href="{{ asset('assetsfront/vendors/aports-icons/style.css') }}" />
+    <link rel="stylesheet" href="{{ asset('assetsfront/vendors/tiny-slider/tiny-slider.min.css') }}" />
+    <link rel="stylesheet" href="{{ asset('assetsfront/vendors/reey-font/stylesheet.css') }}" />
+    <link rel="stylesheet" href="{{ asset('assetsfront/vendors/owl-carousel/owl.carousel.min.css') }}" />
+    <link rel="stylesheet" href="{{ asset('assetsfront/vendors/owl-carousel/owl.theme.default.min.css') }}" />
+    <link rel="stylesheet" href="{{ asset('assetsfront/vendors/bxslider/jquery.bxslider.css') }}" />
+    <link rel="stylesheet" href="{{ asset('assetsfront/vendors/bootstrap-select/css/bootstrap-select.min.css') }}" />
+    <link rel="stylesheet" href="{{ asset('assetsfront/vendors/vegas/vegas.min.css') }}" />
+    <link rel="stylesheet" href="{{ asset('assetsfront/vendors/jquery-ui/jquery-ui.css') }}" />
+    <link rel="stylesheet" href="{{ asset('assetsfront/vendors/timepicker/timePicker.css') }}" />
+    <!-- template styles -->
+    <link rel="stylesheet" href="{{ asset('assetsfront/css/aports.css') }}" />
+    <link rel="stylesheet" href="{{ asset('assetsfront/css/aports-responsive.css') }}" />
 
+    <style>
+        .whatsapp-sidebar {
+            position: fixed;
+            right: 20px;
+            bottom: 20px;
+            width: 60px;
+            height: 60px;
+            background-color: #25d366;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+        }
 
-    @if (!empty($configuration->path_logo))
-        <link rel="shortcut icon" href="{{ asset($configuration->path_logo) }}" type="image/x-icon">
-        <link rel="icon" href="{{ asset($configuration->path_logo) }}" type="image/x-icon">
-    @else
-    @endif
-
-
-    <!-- Responsive -->
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
-
-
-
+        .whatsapp-icon {
+            font-size: 30px;
+            color: white;
+        }
+    </style>
 </head>
 
-<body class="hidden-bar-wrapper">
+<body class="custom-cursor">
+
+    <div class="custom-cursor__cursor"></div>
+    <div class="custom-cursor__cursor-two"></div>
+
+    <div class="preloader">
+        <div class="preloader__image"></div>
+    </div>
+    <!-- /.preloader -->
+    <div class="whatsapp-sidebar">
+        <a href="https://wa.me/{{ $contact->phone_number ?? '' }}?text=Permisi+Admin" target="_blank">
+            <i class="fab fa-whatsapp whatsapp-icon"></i>
+        </a>
+    </div>
+
 
     <div class="page-wrapper">
-
-        <!-- Preloader -->
-        <div class="preloader">
-            <span></span>
-        </div>
-
-        <!-- Main Header -->
         <header class="main-header">
-
-            <!-- Header Top -->
-            <div class="header-top">
-                <div class="auto-container clearfix">
-
-                    <div class="pull-left">
-                        <ul class="info">
-                            @if (!empty($contact->phone_number))
-                                <li><a href="https://wa.me/{{ $contact->phone_number }}"><span
-                                            class="icon flaticon-phone"></span>Panggil:
-                                        +{{ $contact->phone_number }}</a></li>
-                            @else
-                                -
-                            @endif
-                            @if (!empty($contact->email_address))
-                                <li><a href="mailto:{{ $contact->email_address }}"><span
-                                            class="icon flaticon-email-2"></span>{{ $contact->email_address }}</a>
-                                </li>
-                            @else
-                                -
-                            @endif
-                        </ul>
-                    </div>
-
-                    <div class="pull-right clearfix">
-                        <!-- Social Box -->
-                        <ul class="social-box">
-                            @if (!empty($contact->facebook))
-                                <li class="facebook"><a href="{{ $contact->facebook }}" class="fa fa-facebook-f"></a>
-                                </li>
-                            @else
-                            @endif
-                            @if (!empty($contact->email_address))
-                                <li class="gmail">
-                                    <a href="mailto:{{ $contact->email_address }}" class="fa fa-envelope">
-                                    </a>
-                                </li>
-                            @else
-                            @endif
-                            @if (!empty($contact->tiktok))
-                                <li class="tiktok"><a href="{{ $contact->tiktok }}" target="_blank"
-                                        class="fa fa-tiktok">T</a>
-                                @else
-                            @endif
+            <div class="main-header__top">
+                <div class="main-header__top-inner">
+                    <div class="main-header__top-left">
+                        <ul class="list-unstyled main-header__contact-list">
+                            <li>
+                                <div class="icon">
+                                    <i class="fas fa-map-marker-alt"></i>
+                                </div>
+                                <div class="text">
+                                    <p>{{ \Illuminate\Support\Str::limit($contact->address ?? '', 30) }}</p>
+                                </div>
                             </li>
-                            @if (!empty($contact->phone_number))
-                                <li class="whatsapp"> <a href="https://wa.me/{{ $contact->phone_number }}"
-                                        target="_blank" class="fa fa-whatsapp"></a>
-                                </li>
-                            @else
-                            @endif
+                            <li>
+                                <div class="icon">
+                                    <i class="fas fa-envelope"></i>
+                                </div>
+                                <div class="text">
+                                    <p><a
+                                            href="mailto:{{ $contact->email_address ?? '' }}">{{ $contact->email_address ?? '' }}</a>
+                                    </p>
+                                </div>
+                            </li>
                         </ul>
                     </div>
-
+                    <div class="main-header__top-right">
+                        <div class="main-header__top-time">
+                            <p>{{ \Illuminate\Support\Str::limit($contact->hours ?? '', 30) }}</p>
+                        </div>
+                        <div class="main-header__social">
+                            <a href="{{ $contact->instagram ?? '' }}" target="blank"><i
+                                    class="fab fa-instagram"></i></a>
+                            <a href="{{ $contact->tiktok ?? '' }}" target="blank"><i class="fab fa-tiktok"></i></a>
+                            <a href="{{ $contact->facebook ?? '' }}" target="blank"><i class="fab fa-youtube"></i></a>
+                        </div>
+                    </div>
                 </div>
             </div>
-
-            <!-- Header Lower -->
-            <div class="header-lower">
-
-                <div class="auto-container clearfix">
-                    <div class="inner-container clearfix">
-
-                        <div class="pull-left logo-box">
-                            @if (!empty($configuration->path))
-                                <div class="logo"><a href="{{ route('index') }}"><img
-                                            src="{{ asset($configuration->path) }}" alt="" title=""></a>
-                                </div>
-                            @else
-                                -
-                            @endif
+            <nav class="main-menu">
+                <div class="main-menu__wrapper">
+                    <div class="main-menu__wrapper-inner">
+                        <div class="main-menu__left">
+                            <div class="main-menu__logo">
+                                <a href="{{ route('index') }}"><img src="{{ asset($configuration->path ?? '') }}"
+                                        alt=""></a>
+                            </div>
                         </div>
-                        <div class="nav-outer clearfix">
-
-                            <!-- Mobile Navigation Toggler -->
-                            <div class="mobile-nav-toggler"><span class="icon flaticon-menu"></span></div>
-                            <!-- Main Menu -->
-                            <nav class="main-menu show navbar-expand-md">
-                                <div class="navbar-header">
-                                    <button class="navbar-toggler" type="button" data-toggle="collapse"
-                                        data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-                                        aria-expanded="false" aria-label="Toggle navigation">
-                                        <span class="icon-bar"></span>
-                                        <span class="icon-bar"></span>
-                                        <span class="icon-bar"></span>
-                                    </button>
-                                </div>
-
-                                <div class="navbar-collapse collapse clearfix" id="navbarSupportedContent">
-                                    <ul class="navigation clearfix">
-                                        <li
-                                            class="dropdown {{ Route::currentRouteName() == 'index' ? 'current' : '' }}">
-                                            <a href="#">Beranda</a>
-                                            <ul>
-                                                <li> <a href="{{ route('index') }}">Beranda</a></li>
-                                            </ul>
-
-                                        </li>
-
-                                        <li
-                                            class="dropdown {{ in_array(Route::currentRouteName(), ['about', 'price']) ? 'current' : '' }}">
-                                            <a href="#">Tentang</a>
-                                            <ul>
-                                                <li><a href="{{ route('about') }}">Tentang Kita</a></li>
-                                                <li><a href="{{ route('price') }}">Paket Harga</a></li>
-                                            </ul>
-                                        </li>
-
-                                        <li
-                                            class="dropdown {{ in_array(Route::currentRouteName(), ['services', 'detail_service']) ? 'current' : '' }}">
-                                            <a href="#">Layanan</a>
-                                            <ul>
-                                                <li><a href="{{ route('services') }}">Semua Layanan</a></li>
-                                                @foreach ($categoryservices as $category)
-                                                    <li>
-                                                        <a href="{{ route('detail_service', $category->id) }}">
-                                                            {{ $category->category }}
-                                                        </a>
-                                                    </li>
-                                                @endforeach
-                                            </ul>
-                                        </li>
-
-
-                                        <li
-                                            class="dropdown {{ in_array(Route::currentRouteName(), ['blog', 'detail_blog']) ? 'current' : '' }}">
-                                            <a href="#">Blog</a>
-                                            <ul>
-                                                <li><a href="{{ route('blog') }}">Blog</a></li>
-                                            </ul>
-                                        </li>
-                                        <li><a href="{{ route('contact') }}">Kontak Kami</a></li>
+                        <div class="main-menu__main-menu-box">
+                            <a href="#" class="mobile-nav__toggler"><i class="fa fa-bars"></i></a>
+                            <ul class="main-menu__list">
+                                <li class="dropdown {{ Route::currentRouteName() == 'index' ? 'current' : '' }}">
+                                    <a href="{{ route('index') }}"> Beranda </a>
+                                    <ul class="shadow-box">
+                                        <li><a href="{{ route('index') }}">Home One</a></li>
                                     </ul>
+                                </li>
+                                <li class="{{ Route::currentRouteName() == 'about' ? 'current' : '' }}">
+                                    <a href="{{ route('about') }}">Tentang Kami</a>
+                                </li>
+                                <li class="dropdown">
+                                    <a href="#">Tipe Unit</a>
+                                    <ul class="shadow-box">
+                                        <li><a href="{{ route('services') }}">Tipe Unit</a></li>
+                                    </ul>
+                                </li>
+                                <li class="dropdown">
+                                    <a href="#">Berita</a>
+                                    <ul class="shadow-box">
+                                        <li><a href="{{ route('promo') }}">Promo</a></li>
+                                        <li><a href="{{ route('blog') }}">Blog</a></li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a href="{{ route('contact') }}">Kontak Kami</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="main-menu__right">
+                            <div class="main-menu__search-btn-box">
+                                <div class="main-menu__search-box">
+                                    <a href="#"
+                                        class="main-menu__search search-toggler icon-magnifying-glass"></a>
                                 </div>
-
-                            </nav>
-                            <!-- Main Menu End-->
-
-                            <!-- Outer Box -->
-                            <div class="outer-box clearfix">
-
-                                <!--Search Box-->
-                                <div class="search-box-outer">
-                                    <div class="search-box-btn"><span class="fa fa-search"></span></div>
+                                <div class="main-menu__btn-box">
+                                    <a href="{{ route('contact') }}" class="thm-btn main-menu__btn">Jadwalkan</a>
                                 </div>
-
-                                <!-- Nav Btn -->
-                                <div class="nav-btn navSidebar-button"><span class="icon flaticon-dots-menu"></span>
-                                </div>
-
                             </div>
-                            <!-- End Outer Box -->
-
                         </div>
                     </div>
-
                 </div>
-            </div>
-            <!-- End Header Lower -->
-
-            <!-- Sticky Header  -->
-            <div class="sticky-header">
-                <div class="auto-container clearfix">
-                    <!-- Logo -->
-                    <div class="logo pull-left">
-                        @if (!empty($configuration->path))
-                            <a href="{{ route('index') }}" title=""><img src="{{ $configuration->path }}"
-                                    alt="" title=""></a>
-                        @else
-                            Kosong
-                        @endif
-                    </div>
-
-                    <!--Right Col-->
-                    <div class="pull-right">
-                        <!-- Main Menu -->
-                        <nav class="main-menu">
-                            <!--Keep This Empty / Menu will come through Javascript-->
-                        </nav><!-- Main Menu End-->
-
-                        <!-- Outer Box -->
-                        <div class="outer-box clearfix">
-
-                            <!--Search Box-->
-                            <div class="search-box-outer">
-                                <div class="search-box-btn"><span class="fa fa-search"></span></div>
-                            </div>
-
-                            <!-- Cart Box -->
-
-                            <!-- End Cart Box -->
-
-                            <!-- Nav Btn -->
-                            <div class="nav-btn navSidebar-button"><span class="icon flaticon-dots-menu"></span></div>
-
-                        </div>
-                        <!-- End Outer Box -->
-
-                    </div>
-                </div>
-            </div><!-- End Sticky Menu -->
-
-            <!-- Mobile Menu  -->
-            <div class="mobile-menu">
-                <div class="menu-backdrop"></div>
-                <div class="close-btn"><span class="icon flaticon-multiply"></span></div>
-
-                <nav class="menu-box">
-                    <div class="nav-logo"><a href="{{ route('index') }}"><img src="images/logo.png" alt=""
-                                title=""></a></div>
-                    <div class="menu-outer">
-                        <!--Here Menu Will Come Automatically Via Javascript / Same Menu as in Header-->
-                    </div>
-                </nav>
-            </div><!-- End Mobile Menu -->
-
+            </nav>
         </header>
-        <!-- End Main Header -->
 
-        <!-- Sidebar Cart Item -->
-        <div class="xs-sidebar-group info-group">
-            <div class="xs-overlay xs-bg-black"></div>
-            <div class="xs-sidebar-widget">
-                <div class="sidebar-widget-container">
-                    <div class="widget-heading">
-                        <a href="#" class="close-side-widget">
-                            X
-                        </a>
-                    </div>
-                    <div class="sidebar-textwidget">
-
-                        <!-- Sidebar Info Content -->
-                        <div class="sidebar-info-contents">
-                            <div class="content-inner">
-                                <div class="logo">
-                                    @if ($configuration && !empty($configuration->path))
-                                        <a href="{{ route('index') }}"><img src="{{ asset($configuration->path) }}"
-                                                alt="" /></a>
-                                    @else
-                                        -
-                                    @endif
-                                </div>
-                                <div class="content-box">
-                                    <h5>Tentang Kami</h5>
-                                    <div class="container my-5">
-                                        <div class="row">
-                                            <div class="col-12">
-                                                <div class="bg-light p-4 rounded">
-                                                    <p class="text-dark" style="line-height: 1.6; font-size: 16px;">
-                                                        @if ($about && !empty($about->description))
-                                                            {!! $about->description !!}
-                                                        @else
-                                                        @endif
-                                                    </p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-
-                                    <a href="{{ route('contact') }}" class="theme-btn btn-style-one"><span
-                                            class="txt">
-                                            Konsultasi</span></a>
-                                </div>
-                                <div class="contact-info">
-                                    <h5>Info Kontak</h5>
-                                    <ul class="list-style-one">
-                                        @if (!empty($contact->address))
-                                            <li><span class="icon fa fa-location-arrow"></span>{{ $contact->address }}
-                                            </li>
-                                        @endif
-                                        @if (!empty($contact->phone_number))
-                                            <li><span class="icon fa fa-phone"></span>{{ $contact->phone_number }}
-                                            </li>
-                                        @else
-                                        @endif
-                                        @if (!empty($contact->email_address))
-                                            <li><span class="icon fa fa-envelope"></span>{{ $contact->email_address }}
-                                            </li>
-                                        @else
-                                        @endif
-                                        @if (!empty($contact->hours))
-                                            <li><span class="icon fa fa-clock-o"></span>{{ $contact->hours }}</li>
-                                        @else
-                                        @endif
-                                    </ul>
-                                </div>
-                                <!-- Social Box -->
-                                <ul class="social-box">
-                                    @if (!empty($contact->facebook))
-                                        <li class="facebook"><a href="{{ $contact->facebook }}"
-                                                class="fa fa-facebook-f"></a>
-                                        </li>
-                                    @else
-                                    @endif
-                                    @if (!empty($contact->email_address))
-                                        <li class="gmail">
-                                            <a href="mailto:{{ $contact->email_address }}">
-                                                <i class="fa fa-envelope"></i> <!-- Or use a Gmail-specific icon -->
-                                            </a>
-                                        </li>
-                                    @else
-                                    @endif
-                                    @if (!empty($contact->tiktok))
-                                        <li class="tiktok"><a href="{{ $contact->tiktok }}" target="_blank"
-                                                class="fa fa-tiktok">T</a>
-                                        @else
-                                    @endif
-                                    </li>
-                                    @if (!empty($contact->phone_number))
-                                        <li class="whatsapp"> <a href="https://wa.me/{{ $contact->phone_number }}"
-                                                target="_blank" class="fa fa-whatsapp"></a>
-                                        </li>
-                                    @else
-                                    @endif
-                                </ul>
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- END sidebar widget item -->
+        <div class="stricky-header stricked-menu main-menu">
+            <div class="sticky-header__content"></div><!-- /.sticky-header__content -->
+        </div><!-- /.stricky-header -->
 
         @yield('content')
 
-        <!-- CTA Section -->
-        <section class="cta-section">
-            <div class="auto-container">
-                <div class="inner-container" style="background-image: url(images/background/pattern-11.png)">
-                    <div class="row clearfix">
-
-                        <!-- Title Column -->
-                        <div class="title-column col-lg-6 col-md-12 col-sm-12">
-                            <div class="inner-column">
-                                <h3>Ingin daftar indihome atau konsultasi perihal Layanan Indihome? </h3>
-                                <div class="text">Hubungi kami klik tombol berikut..</div>
-                            </div>
-                        </div>
-
-                        <!-- Form Column -->
-                        <div class="form-column col-lg-6 col-md-12 col-sm-12">
-                            <div class="inner-column">
-                                <div class="newsletter-form">
-                                    @if (!empty($contact->phone_number))
-                                        <a href="https://wa.me/{{ $contact->phone_number }}" target="blank">
-                                        @else
-                                    @endif
-                                    <div class="form-group">
-                                        <input type="email" name="email" value=""
-                                            placeholder="Hubungi Kami ---->>>" required="">
-                                        <button type="submit" class="theme-btn btn-style-five"><span
-                                                class="txt">WhatsApp</span></button>
-
+        <!--Site Footer Start-->
+        <footer class="site-footer">
+            <div class="site-footer__top">
+                <div class="site-footer__shape-1 float-bob-x">
+                    <img src="assetsfront/images/shapes/site-footer-shape-1.png" alt="">
+                </div>
+                <div class="container">
+                    <div class="site-footer__top-inner">
+                        <div class="row">
+                            <div class="col-xl-4 col-lg-6 col-md-6 wow fadeInUp" data-wow-delay="100ms">
+                                <div class="footer-widget__column footer-widget__about">
+                                    <div class="footer-widget__about-text-box">
+                                        <p class="footer-widget__about-text">Aports find out all the ways to enjoy
+                                            modern and luxury residential life around the world.</p>
                                     </div>
-                                    </a>
+                                    <div class="site-footer__social">
+                                        <a href="#"><i class="fab fa-twitter"></i></a>
+                                        <a href="#"><i class="fab fa-facebook"></i></a>
+                                        <a href="#"><i class="fab fa-pinterest-p"></i></a>
+                                        <a href="#"><i class="fab fa-instagram"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-2 col-lg-6 col-md-6 wow fadeInUp" data-wow-delay="200ms">
+                                <div class="footer-widget__column footer-widget__Explore">
+                                    <div class="footer-widget__title-box">
+                                        <h3 class="footer-widget__title">Explore</h3>
+                                    </div>
+                                    <ul class="footer-widget__Explore-list list-unstyled">
+                                        <li><a href="{{ route('about') }}">About</a></li>
+                                        <li><a href="{{ route('contact') }}">Contact</a></li>
+                                        <li><a href="{{ route('about') }}">Custom Widget</a></li>
+                                        <li><a href="{{ route('about') }}">Shortcodes</a></li>
+                                        <li><a href="{{ route('about') }}">Blank page</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="col-xl-3 col-lg-6 col-md-6 wow fadeInUp" data-wow-delay="300ms">
+                                <div class="footer-widget__column footer-widget__find">
+                                    <div class="footer-widget__title-box">
+                                        <h3 class="footer-widget__title">Find</h3>
+                                    </div>
+                                    <p class="footer-widget__find-text">30 Broklyn Golden Street, New <br> York United
+                                        States of <br> America</p>
+                                </div>
+                            </div>
+                            <div class="col-xl-3 col-lg-6 col-md-6 wow fadeInUp" data-wow-delay="400ms">
+                                <div class="footer-widget__column footer-widget__Contact">
+                                    <div class="footer-widget__title-box">
+                                        <h3 class="footer-widget__title">Contact</h3>
+                                    </div>
+                                    <ul class="footer-widget__Contact-list list-unstyled">
+                                        <li>
+                                            <div class="icon">
+                                                <span class="fas fa-phone-alt"></span>
+                                            </div>
+                                            <div class="text">
+                                                <p><a href="tel:23425446680">+23 425 4466 80</a></p>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="icon">
+                                                <span class="fas fa-clock"></span>
+                                            </div>
+                                            <div class="text">
+                                                <p>Mon - Sun: 8AM - 8PM</p>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="icon">
+                                                <span class="fas fa-envelope"></span>
+                                            </div>
+                                            <div class="text">
+                                                <p><a href="mailto:needhelp@company.com">needhelp@company.com</a></p>
+                                            </div>
+                                        </li>
+                                    </ul>
                                 </div>
                             </div>
                         </div>
-
                     </div>
                 </div>
             </div>
-        </section>
-        <!-- End CTA Section -->
-
-        <!-- Main Footer -->
-        <footer class="main-footer">
-            <div class="pattern-layer-one"
-                style="background-image: url('{{ asset('images/background/pattern-12.png') }}')"></div>
-            <div class="pattern-layer-two"
-                style="background-image: url('{{ asset('images/background/pattern-13.png') }}')"></div>
-            <div class="auto-container">
-                <div class="widgets-section">
-                    <div class="logo">
-                        @if (!empty($configuration->path))
-                            <a href="{{ route('index') }}"><img src="{{ asset($configuration->path) }}"
-                                    alt="" /></a>
-                        @else
-                            Kosong
-                        @endif
+            <div class="site-footer__bottom">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-xl-12">
+                            <div class="site-footer__bottom-inner">
+                                <p class="site-footer__bottom-text">© All Copyright 2022 by <a
+                                        href="#">Aports.com</a>
+                                </p>
+                            </div>
+                        </div>
                     </div>
-                    <ul class="contact-info-list">
-                        <li>
-                            <span class="icon"><img src="{{ asset('images/icons/icon-1.png') }}"
-                                    alt="" /></span>
-                            @if (!empty($contact->phone_number))
-                                <a
-                                    href="https://wa.me/{{ $contact->phone_number }}">+{{ $contact->phone_number }}</a><br>
-                                <a
-                                    href="https://wa.me/{{ $contact->phone_number_2 }}">+{{ $contact->phone_number_2 }}</a>
-                            @else
-                                Kosong
-                            @endif
-                        </li>
-                        <li>
-                            <span class="icon"><img src="{{ asset('images/icons/icon-2.png') }}"
-                                    alt="" /></span>
-                            @if (!empty($contact->email_address))
-                                <a href="mailto:{{ $contact->email_address }}">{{ $contact->email_address }}</a><br>
-                                <a href="mailto:{{ $contact->email_address_2 }}">{{ $contact->email_address_2 }}</a>
-                            @else
-                                Kosong
-                            @endif
-                        </li>
-                        <li>
-                            <span class="icon"><img src="{{ asset('images/icons/icon-3.png') }}"
-                                    alt="" /></span>
-                            @if (!empty($contact->address))
-                                {{ $contact->address }}
-                            @else
-                                Kosong
-                            @endif
-                        </li>
-                    </ul>
-
-                    <!-- Social Box -->
-                    <ul class="social-box">
-                        @if (!empty($contact->facebook))
-                            <li class="facebook">
-                                <a href="{{ $contact->facebook }}" class="fa fa-facebook-f"></a>
-                            </li>
-                        @endif
-
-                        @if (!empty($contact->email_address))
-                            <li class="gmail">
-                                <a href="mailto:{{ $contact->email_address }}" class="fa fa-envelope">
-                                </a>
-                            </li>
-                        @endif
-
-                        @if (!empty($contact->tiktok))
-                            <li class="tiktok">
-                                <a href="{{ $contact->tiktok }}" target="_blank" class="fa fa-tiktok">T</a>
-                            </li>
-                        @endif
-
-                        @if (!empty($contact->phone_number))
-                            <li class="whatsapp">
-                                <a href="https://wa.me/{{ $contact->phone_number }}" target="_blank"
-                                    class="fa fa-whatsapp"></a>
-                            </li>
-                        @endif
-                    </ul>
-
-
-                </div>
-
-            </div>
-            <!-- Footer Bottom -->
-            <div class="footer-bottom">
-                <div class="auto-container">
-                    @if (!empty($configuration->footer))
-                        <div class="copyright">{{ $configuration->footer }} <a
-                                href="https://wansolution.co.id/">WAN</a></div>
-                    @else
-                        <div class="copyright"> - <a href="https://wansolution.co.id/">WAN</a></div>
-                    @endif
                 </div>
             </div>
         </footer>
+        <!--Site Footer End-->
 
-        <!-- End Main Footer -->
 
-    </div>
-    <!--End pagewrapper-->
+    </div><!-- /.page-wrapper -->
 
-    <!-- Search Popup -->
-    <div class="search-popup">
-        <div class="color-layer"></div>
-        <button class="close-search"><span class="fa fa-arrow-up"></span></button>
-        <form method="GET" action="{{ route('blogs.search') }}">
-            <div class="form-group">
-                <input type="search" name="query" value="{{ request('query') }}" placeholder="Search Here ..."
-                    required>
-                <button type="submit"><span class="icon fa fa-search"></span></button>
+
+    <div class="mobile-nav__wrapper">
+        <div class="mobile-nav__overlay mobile-nav__toggler"></div>
+        <!-- /.mobile-nav__overlay -->
+        <div class="mobile-nav__content">
+            <span class="mobile-nav__close mobile-nav__toggler"><i class="fa fa-times"></i></span>
+
+            <div class="logo-box">
+                <a href="{{ route('index') }}" aria-label="logo image"><img
+                        src="assetsfront/images/resources/logo-3.png" width="122" alt="" /></a>
             </div>
-        </form>
+            <!-- /.logo-box -->
+            <div class="mobile-nav__container"></div>
+            <!-- /.mobile-nav__container -->
+
+            <ul class="mobile-nav__contact list-unstyled">
+                <li>
+                    <i class="fa fa-envelope"></i>
+                    <a href="mailto:needhelp@packageName__.com">needhelp@agrion.com</a>
+                </li>
+                <li>
+                    <i class="fa fa-phone-alt"></i>
+                    <a href="tel:666-888-0000">666 888 0000</a>
+                </li>
+            </ul><!-- /.mobile-nav__contact -->
+            <div class="mobile-nav__top">
+                <div class="mobile-nav__social">
+                    <a href="#" class="fab fa-twitter"></a>
+                    <a href="#" class="fab fa-facebook-square"></a>
+                    <a href="#" class="fab fa-pinterest-p"></a>
+                    <a href="#" class="fab fa-instagram"></a>
+                </div><!-- /.mobile-nav__social -->
+            </div><!-- /.mobile-nav__top -->
+
+
+
+        </div>
+        <!-- /.mobile-nav__content -->
     </div>
-    <!-- End Header Search -->
+    <!-- /.mobile-nav__wrapper -->
 
-    <!-- Scroll To Top -->
-    <div class="scroll-to-top scroll-to-target" data-target="html"><span class="fa fa-arrow-up"></span></div>
+    <div class="search-popup">
+        <div class="search-popup__overlay search-toggler"></div>
+        <!-- /.search-popup__overlay -->
+        <div class="search-popup__content">
+            <form action="#">
+                <label for="search" class="sr-only">search here</label><!-- /.sr-only -->
+                <input type="text" id="search" placeholder="Search Here..." />
+                <button type="submit" aria-label="search submit" class="thm-btn">
+                    <i class="icon-magnifying-glass"></i>
+                </button>
+            </form>
+        </div>
+        <!-- /.search-popup__content -->
+    </div>
+    <!-- /.search-popup -->
 
-    <script src="{{ asset('js/jquery.js') }}"></script>
-    <script src="{{ asset('js/popper.min.js') }}"></script>
-    <script src="{{ asset('js/bootstrap.min.js') }}"></script>
-    <script src="{{ asset('js/jquery.mCustomScrollbar.concat.min.js') }}"></script>
-    <script src="{{ asset('js/jquery.fancybox.js') }}"></script>
-    <script src="{{ asset('js/appear.js') }}"></script>
-    <script src="{{ asset('js/parallax.min.js') }}"></script>
-    <script src="{{ asset('js/tilt.jquery.min.js') }}"></script>
-    <script src="{{ asset('js/jquery.paroller.min.js') }}"></script>
-    <script src="{{ asset('js/owl.js') }}"></script>
-    <script src="{{ asset('js/wow.js') }}"></script>
-    <script src="{{ asset('js/nav-tool.js') }}"></script>
-    <script src="{{ asset('js/jquery-ui.js') }}"></script>
-    <script src="{{ asset('js/script.js') }}"></script>
+    <a href="#" data-target="html" class="scroll-to-target scroll-to-top"><i class="icon-right-arrow"></i></a>
 
-
-    <!--[if lt IE 9]><script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.js"></script><![endif]-->
-    <!--[if lt IE 9]><script src="js/respond.js"></script><![endif]-->
-
+    <script src="{{ asset('assetsfront/vendors/jquery/jquery-3.6.0.min.js') }}"></script>
+    <script src="{{ asset('assetsfront/vendors/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+    <script src="{{ asset('assetsfront/vendors/jarallax/jarallax.min.js') }}"></script>
+    <script src="{{ asset('assetsfront/vendors/jquery-ajaxchimp/jquery.ajaxchimp.min.js') }}"></script>
+    <script src="{{ asset('assetsfront/vendors/jquery-appear/jquery.appear.min.js') }}"></script>
+    <script src="{{ asset('assetsfront/vendors/jquery-circle-progress/jquery.circle-progress.min.js') }}"></script>
+    <script src="{{ asset('assetsfront/vendors/jquery-magnific-popup/jquery.magnific-popup.min.js') }}"></script>
+    <script src="{{ asset('assetsfront/vendors/jquery-validate/jquery.validate.min.js') }}"></script>
+    <script src="{{ asset('assetsfront/vendors/nouislider/nouislider.min.js') }}"></script>
+    <script src="{{ asset('assetsfront/vendors/odometer/odometer.min.js') }}"></script>
+    <script src="{{ asset('assetsfront/vendors/swiper/swiper.min.js') }}"></script>
+    <script src="{{ asset('assetsfront/vendors/tiny-slider/tiny-slider.min.js') }}"></script>
+    <script src="{{ asset('assetsfront/vendors/wnumb/wNumb.min.js') }}"></script>
+    <script src="{{ asset('assetsfront/vendors/wow/wow.js') }}"></script>
+    <script src="{{ asset('assetsfront/vendors/isotope/isotope.js') }}"></script>
+    <script src="{{ asset('assetsfront/vendors/countdown/countdown.min.js') }}"></script>
+    <script src="{{ asset('assetsfront/vendors/owl-carousel/owl.carousel.min.js') }}"></script>
+    <script src="{{ asset('assetsfront/vendors/bxslider/jquery.bxslider.min.js') }}"></script>
+    <script src="{{ asset('assetsfront/vendors/bootstrap-select/js/bootstrap-select.min.js') }}"></script>
+    <script src="{{ asset('assetsfront/vendors/vegas/vegas.min.js') }}"></script>
+    <script src="{{ asset('assetsfront/vendors/jquery-ui/jquery-ui.js') }}"></script>
+    <script src="{{ asset('assetsfront/vendors/timepicker/timePicker.js') }}"></script>
+    <script src="{{ asset('assetsfront/vendors/circleType/jquery.circleType.js') }}"></script>
+    <script src="{{ asset('assetsfront/vendors/circleType/jquery.lettering.min.js') }}"></script>
+    <!-- template js -->
+    <script src="{{ asset('assetsfront/js/aports.js') }}"></script>
 </body>
 
 </html>

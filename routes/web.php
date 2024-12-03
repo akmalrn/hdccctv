@@ -82,7 +82,7 @@ Route::get('/', function () {
 Route::controller(App\Http\Controllers\FrontendController::class)->group(function () {
     Route::get('/', 'index')->name('index');
     Route::get('/about', 'about')->name('about');
-    Route::get('/price', 'price')->name('price');
+    Route::get('/promo', 'promo')->name('promo');
     Route::get('/services', 'services')->name('services');
     Route::get('/service/{id}', 'DetailService')->name('detail_service');
     Route::get('/blog', 'blog')->name('blog');

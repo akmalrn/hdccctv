@@ -28,13 +28,13 @@ class WhyUsController extends Controller
         if ($request->hasFile('path')) {
             $file = $request->file('path');
             $imageName = time() . '_' . $file->getClientOriginalName();
-            $file->move(public_path('uploads/whyus'), $imageName);
+            $file->move(('uploads/whyus'), $imageName);
         }
 
         $data = [
             'title' => $request->input('title'),
             'description' => $request->input('description'),
-            'overview' => $request->input('overview'), // Tambahkan overview
+            'overview' => $request->input('overview'),
             'path' => $imageName,
         ];
 

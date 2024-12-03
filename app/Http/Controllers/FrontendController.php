@@ -2,156 +2,78 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\admin\AboutUs;
-use App\Models\admin\Blog;
-use App\Models\admin\CategoryBlog;
-use App\Models\admin\CategoryService;
-use App\Models\admin\servicesService;
+use App\Models\admin\Slider;
 use App\Models\admin\Configuration;
 use App\Models\admin\Contact;
-use App\Models\admin\OurTeam;
+use App\Models\admin\Gallery;
 use App\Models\admin\Partner;
-use App\Models\admin\Pricing;
-use App\Models\admin\Service;
-use App\Models\admin\Slider;
 use App\Models\admin\Superiority;
-use App\Models\admin\TestimonialClient;
-use App\Models\admin\Price;
-use App\Models\admin\TypeService;
-use App\Models\admin\Video;
-use App\Models\admin\WhyUs;
 use Illuminate\Http\Request;
 
 class FrontendController extends Controller
 {
     public function index()
     {
-        $contact = Contact::first();
-        $about = AboutUs::first();
-        $categoryservices = CategoryService::take(3)->get();
-        $sliders = Slider::all();
-        $services = Service::take(3)->get();
-        $partners = Partner::all();
-        $whyus = WhyUs::first();
-        $pricings = Pricing::all();
-        $superioritys = Superiority::all();
         $configuration = Configuration::first();
-        $testimonialClients = TestimonialClient::take(5)->get();
-        return view('frontend.index', compact('categoryservices', 'sliders', 'services', 'partners', 'whyus', 'pricings', 'superioritys', 'configuration', 'testimonialClients', 'contact', 'about'));
+        $contact = Contact::first();
+        $sliders = Slider::all();
+        $superioritys = Superiority::all();
+        $gallerys = Gallery::all();
+        $mitras = Partner::all();
+        return view('frontend.index', compact('sliders', 'contact', 'configuration', 'superioritys', 'gallerys', 'mitras'));
     }
 
     public function about()
     {
-        $contact = Contact::first();
-        $about = AboutUs::first();
-        $categoryservices = CategoryService::all();
-        $services = Service::all();
         $configuration = Configuration::first();
-        $superioritys = Superiority::all();
-        $testimonialClients = TestimonialClient::take(5)->get();
-        $partners = Partner::all();
-        $ourteam = OurTeam::all();
-        return view('frontend.about', compact('categoryservices', 'services', 'configuration', 'about', 'superioritys', 'testimonialClients', 'partners', 'ourteam', 'contact'));
+        return view('frontend.about', compact('configuration'));
     }
 
-    public function price()
+    public function promo()
     {
-        $contact = Contact::first();
-        $about = AboutUs::first();
         $configuration = Configuration::first();
-        $categoryservices = CategoryService::all();
-        $services = Service::all();
-        $price = Pricing::take(4)->get();
-        return view('frontend.price', compact('configuration', 'services', 'categoryservices', 'price', 'contact', 'about'));
+        return view('frontend.promotion', compact('configuration'));
     }
 
     public function services()
     {
-        $contact = Contact::first();
-        $about = AboutUs::first();
-        $categoryservices = CategoryService::all();
-        $services = Service::all();
         $configuration = Configuration::first();
-        return view('frontend.services', compact('services', 'categoryservices', 'configuration', 'contact', 'about'));
+        return view('frontend.unit-type', compact('configuration'));
     }
 
     public function DetailService($category_id)
     {
-        $contact = Contact::first();
-        $about = AboutUs::first();
         $configuration = Configuration::first();
-        $categoryservices = CategoryService::all();
-        $types = TypeService::all();
-            $services = Service::with('type')
-            ->where('category_id', $category_id)
-            ->get();
-
-
-        if ($services->isEmpty()) {
-            abort(404, 'Layanan tidak ditemukan untuk kategori ini');
-        }
-        if ($categoryservices->isEmpty()) {
-            abort(404, 'Kategori layanan tidak ditemukan');
-        }
-
-        $groupedServices = $services->groupBy('type_id');
-
-        return view('frontend.services-detail', compact('groupedServices', 'types', 'configuration', 'categoryservices', 'services', 'contact', 'about'));
+        return view('frontend.unit-type-detail', compact('configuration'));
     }
 
     public function blog()
     {
-        $contact = Contact::first();
-        $about = AboutUs::first();
-        $categoryservices = CategoryService::all();
-        $services = Service::all();
         $configuration = Configuration::first();
-        $blogs = Blog::orderBy('created_at', 'desc')->paginate(5);
-        $categoryBlogs = CategoryBlog::all();
-        return view('frontend.blog', compact('categoryservices', 'services', 'configuration', 'blogs', 'categoryBlogs', 'contact', 'about'));
+        return view('frontend.blog', compact('configuration'));
     }
 
     public function search(Request $request)
     {
-        $contact = Contact::first();
-        $about = AboutUs::first();
-        $categoryBlogs = CategoryBlog::all();
-        $categoryservices = CategoryService::all();
         $configuration = Configuration::first();
-        $query = $request->input('query');
-        $blogs = Blog::where('title', 'LIKE', "%{$query}%")->orderBy('created_at', 'desc')->paginate(5);
-        return view('frontend.blog-list', compact('blogs', 'categoryBlogs', 'categoryservices', 'configuration', 'contact', 'about'))->with('query', $query);
+        return view('frontend.blog', compact('configuration'));
     }
 
     public function detailblog($id)
     {
-        $contact = Contact::first();
-        $about = AboutUs::first();
-        $blogs = Blog::all();
-        $services = Service::all();
         $configuration = Configuration::first();
-        $blog = Blog::findOrFail($id);
-        $categoryBlogs = CategoryBlog::all();
-        $categoryservices = CategoryService::all();
-        $previousBlog = Blog::where('id', '<', $id)->orderBy('id', 'desc')->first();
-        $nextBlog = Blog::where('id', '>', $id)->orderBy('id', 'asc')->first();
-        return view('frontend.blog-detail', compact('blogs', 'categoryBlogs', 'blog', 'configuration', 'services', 'categoryservices', 'previousBlog', 'nextBlog', 'contact', 'about'));
+        return view('frontend.blog-details', compact('configuration'));
     }
 
     public function notFound()
     {
-        $contact = Contact::first();
-        $about = AboutUs::first();
-        return view('frontend.not-found', compact('contact', 'about'));
+        $configuration = Configuration::first();
+        return view('frontend.not-found', compact('configuration'));
     }
 
     public function contact()
     {
-        $contact = Contact::first();
-        $about = AboutUs::first();
         $configuration = Configuration::first();
-        $categoryservices = CategoryService::all();
-        $services = Service::all();
-        return view('frontend.contact', compact('configuration', 'services', 'categoryservices', 'contact', 'about'));
+        return view('frontend.contact', compact('configuration'));
     }
 }

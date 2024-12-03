@@ -60,7 +60,7 @@
                                     <tbody>
                                         @foreach ($sliders as $slider)
                                             <tr>
-                                                <td><img src="{{ asset('/uploads/sliders/' . $slider->path) }}"
+                                                <td><img src="{{ asset($slider->path) }}"
                                                         alt="{{ $slider->title }}" style="width: 100px"></td>
                                                 <td>{{ $slider->title }}</td>
                                                 <td>{{ Str::limit($slider->overview, 50) }}</td>

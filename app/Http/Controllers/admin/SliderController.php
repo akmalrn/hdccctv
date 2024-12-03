@@ -34,7 +34,7 @@ class SliderController extends Controller
         if ($request->hasFile('path')) {
             $file = $request->file('path');
             $imageName = time() . '_' . $file->getClientOriginalName();
-            $file->move(public_path('uploads/sliders'), $imageName);
+            $file->move(('uploads/sliders'), $imageName);
         }
 
         Slider::create([
@@ -66,13 +66,13 @@ class SliderController extends Controller
         $data = Slider::findOrFail($id);
 
         if ($request->hasFile('path')) {
-            if (file_exists(public_path('uploads/sliders/' . $data->path))) {
-                unlink(public_path('uploads/sliders/' . $data->path));
+            if (file_exists(('uploads/sliders/' . $data->path))) {
+                unlink(('uploads/sliders/' . $data->path));
             }
 
             $image = $request->file('path');
             $imageName = time() . '.' . $image->getClientOriginalExtension();
-            $image->move(public_path('uploads/sliders'), $imageName);
+            $image->move(('uploads/sliders'), $imageName);
 
             $data->path = $imageName;
         }
@@ -90,8 +90,8 @@ class SliderController extends Controller
     {
         $data = Slider::findOrFail($id);
 
-        if (file_exists(public_path('uploads/sliders/' . $data->path))) {
-            unlink(public_path('uploads/sliders/' . $data->path));
+        if (file_exists(('uploads/sliders/' . $data->path))) {
+            unlink(('uploads/sliders/' . $data->path));
         }
 
         $data->delete();

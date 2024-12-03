@@ -62,7 +62,7 @@
                             <!-- Social Media Links -->
                             <div class="row">
                                 <div class="col-md mb-3">
-                                    <label for="facebook" class="form-label">Facebook</label>
+                                    <label for="facebook" class="form-label">Youtube</label>
                                     <input type="text" name="facebook"
                                            class="form-control @error('facebook') is-invalid @enderror"
                                            value="{{ old('facebook', $contact->facebook ?? '') }}">

@@ -36,7 +36,7 @@ class OurTeamController extends Controller
         if ($request->hasFile('path')) {
             $image = $request->file('path');
             $imageName = time() . '-' . Str::slug($request->name) . '.' . $image->getClientOriginalExtension();
-            $image->move(public_path('uploads/our-team'), $imageName);
+            $image->move(('uploads/our-team'), $imageName);
             $validated['path'] = 'uploads/our-team/' . $imageName;
         }
 
@@ -69,10 +69,10 @@ class OurTeamController extends Controller
         if ($request->hasFile('path')) {
             $image = $request->file('path');
             $imageName = time() . '-' . Str::slug($request->name) . '.' . $image->getClientOriginalExtension();
-            $image->move(public_path('uploads/our-team'), $imageName);
+            $image->move(('uploads/our-team'), $imageName);
 
-            if (file_exists(public_path($team->path))) {
-                unlink(public_path($team->path));
+            if (file_exists(($team->path))) {
+                unlink(($team->path));
             }
 
             $validated['path'] = 'uploads/our-team/' . $imageName;
@@ -89,8 +89,8 @@ class OurTeamController extends Controller
     {
         $team = OurTeam::findOrFail($id);
 
-        if (file_exists(public_path($team->path))) {
-            unlink(public_path($team->path));
+        if (file_exists(($team->path))) {
+            unlink(($team->path));
         }
 
         $team->delete();

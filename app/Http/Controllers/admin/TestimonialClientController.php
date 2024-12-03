@@ -33,7 +33,7 @@ class TestimonialClientController extends Controller
         if ($request->hasFile('path')) {
             $file = $request->file('path');
             $imageName = time() . '_' . $file->getClientOriginalName();
-            $file->move(public_path('uploads/testimonialClients'), $imageName);
+            $file->move(('uploads/testimonialClients'), $imageName);
         }
 
         TestimonialClient::create([
@@ -65,13 +65,13 @@ class TestimonialClientController extends Controller
         $data = TestimonialClient::findOrFail($id);
 
         if ($request->hasFile('path')) {
-            if (file_exists(public_path('uploads/testimonialClients/' . $data->path))) {
-                unlink(public_path('uploads/testimonialClients/' . $data->path));
+            if (file_exists(('uploads/testimonialClients/' . $data->path))) {
+                unlink(('uploads/testimonialClients/' . $data->path));
             }
 
             $image = $request->file('path');
             $imageName = time() . '.' . $image->getClientOriginalExtension();
-            $image->move(public_path('uploads/testimonialClients'), $imageName);
+            $image->move(('uploads/testimonialClients'), $imageName);
 
             $data->path = $imageName;
         }
@@ -89,8 +89,8 @@ class TestimonialClientController extends Controller
     {
         $data = TestimonialClient::findOrFail($id);
 
-        if (file_exists(public_path('uploads/testimonialClients/' . $data->path))) {
-            unlink(public_path('uploads/testimonialClients/' . $data->path));
+        if (file_exists(('uploads/testimonialClients/' . $data->path))) {
+            unlink(('uploads/testimonialClients/' . $data->path));
         }
 
         $data->delete();

@@ -82,24 +82,12 @@ class ServiceController extends Controller
             'type_id' => $request->type_id,
         ]);
 
-        // Redirect with a success message
         return redirect()->route('services.index')->with('success', 'Service updated successfully.');
     }
 
     public function destroy($id)
     {
-        // Mencari layanan berdasarkan ID
         $service = Service::findOrFail($id);
-
-        // Menghapus gambar dari server jika ada
-        if ($service->path) {
-            $imagePath = public_path($service->path);
-            if (file_exists($imagePath)) {
-                unlink($imagePath); // Menghapus file gambar
-            }
-        }
-
-        // Menghapus layanan dari database
         $service->delete();
 
         return redirect()->route('services.index')->with('success', 'Service deleted successfully.');

@@ -14,14 +14,14 @@ class BlogController extends Controller
     {
         $user = Auth::user();
         $categoryblogs = CategoryBlog::all();
-        $blogs = Blog::with('category')->get(); // Fetch all blogs with their categories
+        $blogs = Blog::with('category')->get();
         return view('backend.blog.index', compact('user', 'categoryblogs', 'blogs'));
     }
 
     public function create()
     {
         $user = Auth::user();
-        $categoryblog = CategoryBlog::all(); // Fetch all categories for the dropdown
+        $categoryblog = CategoryBlog::all();
         return view('backend.blog.create', compact('categoryblog', 'user'));
     }
 
@@ -32,29 +32,27 @@ class BlogController extends Controller
             'overview' => 'required|string',
             'description' => 'required|string',
             'keywords' => 'required|string',
-            'descriptions' => 'required|string', // Ensure this field exists in your database
-            'category_id' => 'required|exists:category_blogs,id', // Validate category
-            'path' => 'required|image|mimes:jpg,jpeg,png,webp|max:8192', // Validate image
+            'descriptions' => 'required|string',
+            'category_id' => 'required|exists:category_blogs,id',
+            'path' => 'required|image|mimes:jpg,jpeg,png,webp|max:8192',
         ]);
 
         $imageName = null;
 
-        // Handle the file upload
         if ($request->hasFile('path')) {
             $file = $request->file('path');
             $imageName = time() . '_' . $file->getClientOriginalName();
-            $file->move(public_path('uploads/blogs'), $imageName);
+            $file->move(('uploads/blogs'), $imageName);
         }
 
-        // Create a new blog entry
         Blog::create([
             'title' => $request->title,
             'overview' => $request->overview,
             'description' => $request->description,
             'keywords' => $request->keywords,
-            'descriptions' => $request->descriptions, // Ensure this is a valid field
+            'descriptions' => $request->descriptions,
             'category_id' => $request->category_id,
-            'path' => $imageName ?? null, // Ensure this is nullable
+            'path' => $imageName ?? null,
         ]);
 
         return redirect()->route('blogs.index')->with('success', 'Blog added successfully.');
@@ -62,7 +60,6 @@ class BlogController extends Controller
 
     public function edit($id)
     {
-        // Ubah findOrFails menjadi findOrFail
         $blog = Blog::findOrFail($id);
         $user = Auth::user();
         $categoryblogs = CategoryBlog::all();
@@ -76,29 +73,25 @@ class BlogController extends Controller
             'overview' => 'required|string',
             'description' => 'required|string',
             'keywords' => 'required|string',
-            'descriptions' => 'required|string', // Ensure this field exists in your database
-            'category_id' => 'required|exists:category_blogs,id', // Validate category
-            'path' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:8192', // Validate image
+            'descriptions' => 'required|string',
+            'category_id' => 'required|exists:category_blogs,id',
+            'path' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:8192',
         ]);
 
         $blog = Blog::findOrFail($id);
 
-        // Handle the image upload if a new image is provided
         if ($request->hasFile('path')) {
-            // Delete the existing image if it exists
-            $existingImagePath = public_path('uploads/blogs/' . $blog->path);
+            $existingImagePath = ('uploads/blogs/' . $blog->path);
             if (file_exists($existingImagePath)) {
                 unlink($existingImagePath);
             }
 
-            // Process the new image upload
             $image = $request->file('path');
             $imageName = time() . '.' . $image->getClientOriginalExtension();
-            $image->move(public_path('uploads/blogs'), $imageName);
-            $blog->path = $imageName; // Update the blog's image path
+            $image->move(('uploads/blogs'), $imageName);
+            $blog->path = $imageName;
         }
 
-        // Update the blog entry
         $blog->update([
             'title' => $request->title,
             'overview' => $request->overview,
@@ -106,7 +99,6 @@ class BlogController extends Controller
             'keywords' => $request->keywords,
             'descriptions' => $request->descriptions,
             'category_id' => $request->category_id,
-            // The path is handled separately above
         ]);
 
         return redirect()->route('blogs.index')->with('success', 'Blog updated successfully.');
@@ -116,15 +108,13 @@ class BlogController extends Controller
     {
         $blog = Blog::findOrFail($id);
 
-        // Delete the image from the server if it exists
         if ($blog->path) {
-            $imagePath = public_path('uploads/blogs/' . $blog->path);
+            $imagePath = ('uploads/blogs/' . $blog->path);
             if (file_exists($imagePath)) {
                 unlink($imagePath);
             }
         }
 
-        // Delete the blog from the database
         $blog->delete();
 
         return redirect()->route('blogs.index')->with('success', 'Blog deleted successfully.');

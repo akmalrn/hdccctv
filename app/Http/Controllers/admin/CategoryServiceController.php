@@ -27,7 +27,7 @@ class CategoryServiceController extends Controller
         if ($request->hasFile('path')) {
             $file = $request->file('path');
             $imageName = time() . '_' . $file->getClientOriginalName();
-            $file->move(public_path('uploads/services'), $imageName);
+            $file->move(('uploads/services'), $imageName);
         }
 
         CategoryService::create([
@@ -55,21 +55,20 @@ class CategoryServiceController extends Controller
         $categoryservices = CategoryService::findOrFail($id);
 
         if ($request->hasFile('path')) {
-            $existingImagePath = public_path('uploads/services/' . $categoryservices->path);
+            $existingImagePath = ('uploads/services/' . $categoryservices->path);
             if (file_exists($existingImagePath)) {
                 unlink($existingImagePath);
             }
 
             $image = $request->file('path');
             $imageName = time() . '.' . $image->getClientOriginalExtension();
-            $image->move(public_path('uploads/services'), $imageName);
+            $image->move(('uploads/services'), $imageName);
 
             $categoryservices->path = $imageName;
         }
 
         $categoryservices->update([
             'category' => $request->category,
-              // 'path' => $service->path, // No need to add this here since we handle it above
         ]);
 
         return redirect()->route('services.index')->with('success', 'Category updated successfully.');

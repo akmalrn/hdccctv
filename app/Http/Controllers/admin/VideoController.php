@@ -33,7 +33,7 @@ class VideoController extends Controller
         if ($request->hasFile('path')) {
             $file = $request->file('path');
             $imageName = time() . '_' . $file->getClientOriginalName();
-            $file->move(public_path('uploads/videos'), $imageName);
+            $file->move(('uploads/videos'), $imageName);
         }
 
         Video::create([
@@ -65,13 +65,13 @@ class VideoController extends Controller
         $data = Video::findOrFail($id);
 
         if ($request->hasFile('path')) {
-            if (file_exists(public_path('uploads/videos/' . $data->path))) {
-                unlink(public_path('uploads/videos/' . $data->path));
+            if (file_exists(('uploads/videos/' . $data->path))) {
+                unlink(('uploads/videos/' . $data->path));
             }
 
             $image = $request->file('path');
             $imageName = time() . '.' . $image->getClientOriginalExtension();
-            $image->move(public_path('uploads/videos'), $imageName);
+            $image->move(('uploads/videos'), $imageName);
 
             $data->path = $imageName;
         }
@@ -89,8 +89,8 @@ class VideoController extends Controller
     {
         $data = video::findOrFail($id);
 
-        if (file_exists(public_path('uploads/videos/' . $data->path))) {
-            unlink(public_path('uploads/videos/' . $data->path));
+        if (file_exists(('uploads/videos/' . $data->path))) {
+            unlink(('uploads/videos/' . $data->path));
         }
 
         $data->delete();

@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <title>GrahaTekno - Admin Dashboard</title>
     <meta content="width=device-width, initial-scale=1.0, shrink-to-fit=no" name="viewport" />
-    <link rel="icon" href="{{ asset('images/LogoGratek.png') }}" type="image/x-icon" />
+    <link rel="icon" href="{{ asset('Wan Logo.png') }}" type="image/x-icon" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
@@ -117,9 +117,9 @@
                 <!-- Logo Header -->
                 <div class="logo-header" data-background-color="dark">
                     <a href="index.html" class="logo" style="color: white">
-                        <img src="{{ asset('images/LogoGraTek.png') }}" alt="navbar brand" class="navbar-brand"
-                            height="50" />
-                        <div class="ms-2"> Graha Teknologi </div class="">
+                        <img src="{{ asset('Wan Logo.png') }}" alt="navbar brand" class="navbar-brand"
+                            height="25" />
+                        <div class="ms-2"> WAN Teknologi </div class="">
                     </a>
                     <div class="nav-toggle">
                         <button class="btn btn-toggle toggle-sidebar">
@@ -449,7 +449,7 @@
                     </nav>
                     <div class="copyright">
                         2024, made with <i class="fas fa-globe text-info"></i> by
-                        <a href="https://grahateknologi.com" target="blank">Graha Teknologi</a>
+                        <a href="https://grahateknologi.com" target="blank">WAN Teknologi Intern</a>
                     </div>
                     <div>
                         Distributed by

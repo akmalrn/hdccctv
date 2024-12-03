@@ -19,7 +19,6 @@ class AboutUsController extends Controller
 
     public function storeOrUpdate(Request $request)
     {
-        // Validasi input
         $request->validate([
             'path' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:8192',
             'title' => 'nullable|string',
@@ -27,35 +26,29 @@ class AboutUsController extends Controller
             'description' => 'nullable|string',
         ]);
 
-        // Tentukan data yang akan disimpan atau diupdate
         $data = [
             'title' => $request->input('title'),
             'overview' => $request->input('overview'),
             'description' => $request->input('description'),
         ];
 
-        // Cek jika ada file gambar untuk path
         if ($request->hasFile('path')) {
-            // Hapus file lama jika ada
             $oldPath = AboutUs::find(1)->path ?? null;
-            if ($oldPath && File::exists(public_path($oldPath))) {
-                File::delete(public_path($oldPath));
+            if ($oldPath && File::exists(($oldPath))) {
+                File::delete(($oldPath));
             }
 
-            // Simpan gambar baru dengan move()
             $image = $request->file('path');
             $imageName = time() . '_' . $image->getClientOriginalName();
-            $destinationPath = public_path('uploads/aboutus');
+            $destinationPath = ('uploads/aboutus');
             $image->move($destinationPath, $imageName);
 
-            // Simpan path gambar di database
             $data['path'] = 'uploads/aboutus/' . $imageName;
         }
 
-        // Simpan atau update data ke dalam database
         AboutUs::updateOrCreate(
-            ['id' => 1], // Cari berdasarkan ID 1 (karena tabel ini hanya memiliki 1 row)
-            $data // Data yang diupdate atau disimpan
+            ['id' => 1],
+            $data
         );
 
         return redirect()->back()->with('success', 'AboutUs has been successfully saved or updated.');

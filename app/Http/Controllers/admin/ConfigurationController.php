@@ -25,11 +25,17 @@ class ConfigurationController extends Controller
             'meta_keywords' => 'nullable|string',
             'meta_descriptions' => 'nullable|string',
             'footer' => 'nullable|string',
-            'path_services' => 'nullable',
-            'overview_1' => 'nullable',
-            'description_1' => 'nullable',
-            'price_1' => 'nullable',
-            'path_1' => 'nullable',
+            'path_building' => 'nullable',
+            'path_building_2' => 'nullable',
+            'title_building' => 'nullable',
+            'overview_building' => 'nullable',
+            'description' => 'nullable',
+            'areas_building' => 'nullable',
+            'parkings_building' => 'nullable',
+            'units_building' => 'nullable',
+            'bedrooms_building' => 'nullable',
+            'features_building' => 'nullable',
+            'youtube_superiotiry' => 'nullable',
         ]);
 
         $data = [
@@ -38,57 +44,63 @@ class ConfigurationController extends Controller
             'meta_keywords' => $request->input('meta_keywords'),
             'meta_descriptions' => $request->input('meta_descriptions'),
             'footer' => $request->input('footer'),
-            'overview_1' => $request->input('overview_1'),
-            'price_1' => $request->input('price_1'),
-            'description_1' => $request->input('description_1'),
+            'title_building' => $request->input('title_building'),
+            'overview_building' => $request->input('overview_building'),
+            'description' => $request->input('description'),
+            'areas_building' => $request->input('areas_building'),
+            'parkings_building' => $request->input('parkings_building'),
+            'units_building' => $request->input('units_building'),
+            'bedrooms_building' => $request->input('bedrooms_building'),
+            'features_building' => $request->input('features_building'),
+            'youtube_superiotiry' => $request->input('youtube_superiotiry'),
         ];
 
         if ($request->hasFile('path')) {
             $oldPath = Configuration::find(1)->path ?? null;
-            if ($oldPath && File::exists(public_path($oldPath))) {
-                File::delete(public_path($oldPath));
+            if ($oldPath && File::exists(($oldPath))) {
+                File::delete(($oldPath));
             }
             $image = $request->file('path');
             $imageName = time() . '_' . $image->getClientOriginalName();
-            $destinationPath = public_path('uploads/configuration');
+            $destinationPath = ('uploads/configuration');
             $image->move($destinationPath, $imageName);
             $data['path'] = 'uploads/configuration/' . $imageName;
         }
 
         if ($request->hasFile('path_logo')) {
             $oldPathLogo = Configuration::find(1)->path_logo ?? null;
-            if ($oldPathLogo && File::exists(public_path($oldPathLogo))) {
-                File::delete(public_path($oldPathLogo));
+            if ($oldPathLogo && File::exists(($oldPathLogo))) {
+                File::delete(($oldPathLogo));
             }
             $logo = $request->file('path_logo');
             $logoName = time() . '_' . $logo->getClientOriginalName();
-            $destinationPath = public_path('uploads/configuration');
+            $destinationPath = ('uploads/configuration');
             $logo->move($destinationPath, $logoName);
             $data['path_logo'] = 'uploads/configuration/' . $logoName;
         }
 
-        if ($request->hasFile('path_services')) {
-            $oldPathLogo = Configuration::find(1)->path_services ?? null;
-            if ($oldPathLogo && File::exists(public_path($oldPathLogo))) {
-                File::delete(public_path($oldPathLogo));
+        if ($request->hasFile('path_building')) {
+            $oldPathLogo = Configuration::find(1)->path_building ?? null;
+            if ($oldPathLogo && File::exists(($oldPathLogo))) {
+                File::delete(($oldPathLogo));
             }
-            $logo = $request->file('path_services');
+            $logo = $request->file('path_building');
             $logoName = time() . '_' . $logo->getClientOriginalName();
-            $destinationPath = public_path('uploads/configuration');
+            $destinationPath = ('uploads/configuration');
             $logo->move($destinationPath, $logoName);
-            $data['path_services'] = 'uploads/configuration/' . $logoName;
+            $data['path_building'] = 'uploads/configuration/' . $logoName;
         }
 
-        if ($request->hasFile('path_1')) {
-            $oldPathLogo = Configuration::find(1)->path_1 ?? null;
-            if ($oldPathLogo && File::exists(public_path($oldPathLogo))) {
-                File::delete(public_path($oldPathLogo));
+        if ($request->hasFile('path_building_2')) {
+            $oldPathLogo = Configuration::find(1)->path_building_2 ?? null;
+            if ($oldPathLogo && File::exists(($oldPathLogo))) {
+                File::delete(($oldPathLogo));
             }
-            $logo = $request->file('path_1');
+            $logo = $request->file('path_building_2');
             $logoName = time() . '_' . $logo->getClientOriginalName();
-            $destinationPath = public_path('uploads/configuration');
+            $destinationPath = ('uploads/configuration');
             $logo->move($destinationPath, $logoName);
-            $data['path_1'] = 'uploads/configuration/' . $logoName;
+            $data['path_building_2'] = 'uploads/configuration/' . $logoName;
         }
 
         Configuration::updateOrCreate(
