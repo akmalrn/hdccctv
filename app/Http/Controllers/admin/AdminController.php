@@ -4,6 +4,7 @@ namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\admin\Blog;
+use App\Models\admin\Partner;
 use App\Models\admin\Service;
 use App\Models\admin\TestimonialClient;
 use App\Models\Visit;
@@ -32,7 +33,7 @@ class AdminController extends Controller
         if ($yesterdayVisit > 0) {
             $percentageChange = (($todayVisit - $yesterdayVisit) / $yesterdayVisit) * 100;
         }
-        $totalBlog = Blog::count();
+        $totalBlog = Partner::count();
 
         return view('backend.index', compact('totalServices', 'totalTestimonials', 'totalBlog', 'visits', 'todayVisit', 'percentageChange', 'onlineVisitorsCount', 'totalVisits'));
     }

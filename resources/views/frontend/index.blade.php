@@ -1,775 +1,599 @@
-@extends('frontend.layouts')
-@section('content')
-    <!--Main Slider Start-->
-    <section class="main-slider clearfix">
-        <div class="swiper-container thm-swiper__slider"
-            data-swiper-options='{"slidesPerView": 1, "loop": true,
-            "effect": "fade",
-            "pagination": {
-            "el": "#main-slider-pagination",
-            "type": "bullets",
-            "clickable": true
-            },
-            "navigation": {
-            "nextEl": "#main-slider__swiper-button-next",
-            "prevEl": "#main-slider__swiper-button-prev"
-            },
-            "autoplay": {
-            "delay": 5000
-            }}'>
+<!DOCTYPE html>
+<html lang="en">
 
-            <div class="swiper-wrapper">
-                @foreach ($sliders as $slider)
-                    <div class="swiper-slide">
-                        <div class="image-layer" style="background-image: url({{ asset($slider->path) }});"></div>
-                        <!-- /.image-layer -->
+<head>
+    <meta charset="utf-8">
+    <title>{{ $configuration->title ?? '' }}</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="{{ $configuration->meta_keywords ?? '' }}" name="keywords">
+    <meta content="{{ $configuraiton->meta_descriptions ?? '' }}" name="description">
+
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="{{ $configuration->path_logo ?? '' }}" type="image/x-icon">
+
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500&family=Roboto:wght@500;700;900&display=swap"
+        rel="stylesheet">
+
+    <!-- Icon Font Stylesheet -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+    <!-- Font Awesome CDN -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+
+    <!-- Swiper CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
+
+    <!-- Swiper JS -->
+    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+
+
+
+    <!-- Libraries Stylesheet -->
+    <link href="{{ asset('assetsfront/lib/animate/animate.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('assetsfront/lib/owlcarousel/assets/owl.carousel.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('assetsfront/lib/lightbox/css/lightbox.min.css') }}" rel="stylesheet">
+
+    <!-- Customized Bootstrap Stylesheet -->
+    <link href="{{ asset('assetsfront/css/bootstrap.min.css') }}" rel="stylesheet">
+
+    <!-- Template Stylesheet -->
+    <link href="{{ asset('assetsfront/css/style.css') }}" rel="stylesheet">
+</head>
+
+<body>
+    <!-- Spinner Start -->
+    <div id="spinner"
+        class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
+        <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">
+            <span class="sr-only">Loading...</span>
+        </div>
+    </div>
+    <!-- Spinner End -->
+
+
+    <!-- Topbar Start -->
+    <div class="container-fluid bg-dark px-5">
+        <div class="row gx-4 d-none d-lg-flex">
+            <div class="col-lg-6 text-start">
+                <div class="h-100 d-inline-flex align-items-center py-3 me-4">
+                    <div class="btn-sm-square rounded-circle bg-primary me-2">
+                        <small class="fa fa-map-marker-alt text-white"></small>
+                    </div>
+                    <small>{{ $contact->address ?? '' }}</small>
+                </div>
+                <div class="h-100 d-inline-flex align-items-center py-3">
+                    <div class="btn-sm-square rounded-circle bg-primary me-2">
+                        <small class="fa fa-envelope-open text-white"></small>
+                    </div>
+                    <small>{{ $contact->email_address ?? '' }}</small>
+                </div>
+            </div>
+            <div class="col-lg-6 text-end">
+                <div class="h-100 d-inline-flex align-items-center py-3 me-4">
+                    <div class="btn-sm-square rounded-circle bg-primary me-2">
+                        <small class="fa fa-phone-alt text-white"></small>
+                    </div>
+                    <small>+{{ $contact->phone_number ?? '' }}</small>
+                </div>
+                <div class="h-100 d-inline-flex align-items-center py-3">
+                    <div class="btn-sm-square rounded-circle bg-primary me-2">
+                        <small class="far fa-clock text-white"></small>
+                    </div>
+                    <small>{{ $contact->hours ?? '' }}</small>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Topbar End -->
+
+
+    <!-- Navbar Start -->
+    <nav class="navbar navbar-expand-lg bg-white navbar-light sticky-top p-0 px-4 px-lg-5">
+        <a href="" class="navbar-brand d-flex align-items-center">
+            <img src="{{ asset($configuration->path ?? '') }}" alt="{{ $configuration->website_name ?? '' }}"
+                width="50px" height="50px">
+            <h2 class="ms-3 mt-3"> {{ $configuration->website_name ?? '' }}</h2>
+        </a>
+        <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+            <div class="navbar-nav ms-auto py-4 py-lg-0">
+                <a href="#" class="nav-item nav-link active">Beranda</a>
+                <a href="#about" class="nav-item nav-link">Tentang</a>
+                <a href="#services" class="nav-item nav-link">Layanan</a>
+                <a href="#gallery" class="nav-item nav-link">Galeri</a>
+                <a href="https://wa.me/{{ $contact->phone_number }}" target="blank"
+                    class="nav-item nav-link">Kontak</a>
+            </div>
+            <div class="h-100 d-lg-inline-flex align-items-center d-none">
+                @if ($contact->phone_number)
+                    <a class="btn btn-square btn-outline-secondary rounded-circle me-2"
+                        href="https://wa.me/{{ $contact->phone_number }}" target="_blank">
+                        <i class="fab fa-whatsapp"></i>
+                    </a>
+                @endif
+
+                @if ($contact->email_address)
+                    <a class="btn btn-square btn-outline-secondary rounded-circle me-2"
+                        href="mailto:{{ $contact->email_address }}" target="_blank">
+                        <i class="fab fa-google"></i>
+                    </a>
+                @endif
+
+                @if ($contact->facebook)
+                    <a class="btn btn-square btn-outline-secondary rounded-circle me-2" href="{{ $contact->facebook }}"
+                        target="_blank">
+                        <i class="fab fa-facebook-f"></i>
+                    </a>
+                @endif
+
+                @if ($contact->instagram)
+                    <a class="btn btn-square btn-outline-secondary rounded-circle me-2"
+                        href="{{ $contact->instagram }}" target="_blank">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                @endif
+            </div>
+        </div>
+    </nav>
+    <!-- Navbar End -->
+
+    <div class="whatsapp-container">
+        <a href="https://wa.me/{{ $contact->phone_number }}" class="whatsapp-button" target="_blank"
+            rel="noopener noreferrer">
+            <i class="fab fa-whatsapp"></i>
+        </a>
+    </div>
+
+
+    <!-- Carousel Start -->
+    <div class="container-fluid p-0 pb-5">
+        <div class="owl-carousel header-carousel position-relative">
+            @foreach ($sliders as $slider)
+                <div class="owl-carousel-item position-relative">
+                    <img class="img-fluid" src="{{ asset($slider->path) }}" alt="">
+                    <div class="carousel-inner">
                         <div class="container">
-                            <div class="row">
-                                <div class="col-xl-12">
-                                    <div class="main-slider__content">
-                                        <h2 class="main-slider__title">{{ $slider->title }}</h2>
-                                    </div>
+                            <div class="row justify-content-center">
+                                <div class="col-12 col-lg-8 text-center">
+                                    <h1 class="display-3 text-white animated slideInDown mb-4">{{ $slider->title }}
+                                    </h1>
+                                    <p class="fs-5 text-white mb-4 pb-2">{{ $slider->overview }}</p>
+                                    <a href="https://wa.me/{{ $contact->phone_number }}" target="blank"
+                                        class="btn btn-primary rounded-pill py-md-3 px-md-5 me-3 animated slideInLeft">Hubungi</a>
+                                    <a href="{{ $contact->email_address ?? '' }}" target="blank"
+                                        class="btn btn-light rounded-pill py-md-3 px-md-5 animated slideInRight">Email</a>
                                 </div>
                             </div>
+                        </div>
+                    </div>
+                </div>
+            @endforeach
+        </div>
+    </div>
+    <!-- Carousel End -->
+
+    <!-- About Start -->
+    <div class="container-fluid bg-light overflow-hidden my-5 px-lg-0" id="about">
+        <div class="container about px-lg-0">
+            <div class="row g-0 mx-lg-0">
+                <div class="col-lg-6 ps-lg-0" style="min-height: 400px;">
+                    <div class="position-relative h-100">
+                        <img class="position-absolute img-fluid w-100 h-100" src="{{ asset($about->path ?? '') }}"
+                            style="object-fit: cover;" alt="">
+                    </div>
+                </div>
+                <div class="col-lg-6 about-text py-5 wow fadeIn" data-wow-delay="0.5s">
+                    <div class="p-lg-5 pe-lg-0">
+                        <div class="bg-primary mb-3" style="width: 60px; height: 2px;"></div>
+                        <h1 class="display-5 mb-4">Tentang Kami</h1>
+                        <p class="mb-4 pb-2">{!! $about->description ?? '' !!}</p>
+                        <div class="row g-4 mb-4 pb-3">
+                            <div class="col-sm-6 wow fadeIn" data-wow-delay="0.3s">
+                            </div>
+                        </div>
+                        <a href="https://wa.me/{{ $contact->phone_number ?? '' }}" target="blank"
+                            class="btn btn-primary rounded-pill py-3 px-5">Hubungi</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- About End -->
+
+    <!-- Facts Start -->
+    <div class="container-xxl py-5" id="superiority">
+        <div class="container">
+            <div class="row g-4">
+                @foreach ($superioritys as $superiority)
+                    <div class="col-md-6 col-lg-4 wow fadeIn" data-wow-delay="0.1s">
+                        <div class="h-100 bg-dark p-4 p-xl-5">
+                            <div class="d-flex align-items-center justify-content-between mb-4">
+                                <div class="btn-square rounded-circle"
+                                    style="width: 64px; height: 64px; background: #000000;">
+                                    <img class="img-fluid" src="{{ $superiority->path }}" alt="Icon">
+                                </div>
+                                <h1 class="display-1 mb-0" style="color: #000000;">{{ $superiority->id }}</h1>
+                            </div>
+                            <h5 class="text-white">{{ $superiority->title }}</h5>
+                            <hr class="w-25">
+                            <span>{!! $superiority->description !!}</span>
                         </div>
                     </div>
                 @endforeach
             </div>
-
-
-
-            <!-- If we need navigation buttons -->
-            <div class="main-slider__nav">
-                <div class="swiper-button-prev" id="main-slider__swiper-button-next">
-                    <i class="icon-left-arrow"></i>
-                </div>
-                <div class="swiper-button-next" id="main-slider__swiper-button-prev">
-                    <i class="icon-right-arrow"></i>
-                </div>
-            </div>
-
         </div>
-    </section>
-    <!--Main Slider End-->
+    </div>
+    <!-- Facts Start -->
 
-    <!--About One Start-->
-    <section class="about-one">
-        <div class="container">
-            <div class="row">
-                <div class="col-xl-6">
-                    <div class="about-one__left wow slideInLeft" data-wow-delay="100ms" data-wow-duration="2500ms">
-                        <div class="about-one__big-text">Apartments</div>
-                        <div class="about-one__img-box">
-                            <div class="about-one__img-one">
-                                <img src="{{ asset($configuration->path_building ?? '') }}" alt="" height="800px" style="width:550px ; max-width: 550px">
-                            </div>
-                            <div class="about-one__img-two">
-                                <img src="{{ asset($configuration->path_building_2 ?? '') }}" alt="" width="419px" height="353">
-                            </div>
-                            <div class="about-one__shape-1 float-bob-y"></div>
-                            <div class="about-one__shape-2">
-                                <img src="assetsfront/images/shapes/about-one-shape-2.png" alt="">
-                            </div>
+    <!-- Service Start -->
+    <div class="swiper services-slider">
+        <div class="swiper-wrapper">
+            @foreach ($services as $service)
+                <div class="swiper-slide">
+                    <div class="service-item border h-100 p-4 text-center">
+                        <div class="btn-square bg-light rounded-circle mx-auto mb-4"
+                            style="width: 300px; height: 300px; display: flex; align-items: center; justify-content: center;">
+                            <img class="img-fluid" src="{{ asset($service->path) }}" alt="gambar"
+                                style="max-width: 100%; height: auto;">
                         </div>
+                        <a class="btn btn-primary" href="https://wa.me/{{ $contact->phone_number ?? '' }}"
+                            target="_blank">
+                            <i class="fa fa-arrow-right me-2"></i>Hubungi
+                        </a>
                     </div>
                 </div>
-                <div class="col-xl-6">
-                    <div class="about-one__right">
-                        <div class="section-title text-left">
-                            <span class="section-title__tagline">gambaran umum bangunan</span>
-                            <h2 class="section-title__title">{{ $configuration->title_building ?? '' }}</h2>
-                        </div>
-                        <p class="about-one__text">{{ $configuration->overview_building ?? '' }}</p>
-                        <ul class="list-unstyled about-one__points">
-                            {!! $configuration->description ?? '' !!}
-                        </ul>
-                        <a href="{{ route('about') }}" class="thm-btn about-one__btn">Lebih Detil</a>
-                        <br>
-                    </div>
-                </div>
-            </div>
+            @endforeach
         </div>
-    </section>
-    <!--About One End-->
+    </div>
+    <br>
 
-    <!--Counter One Start-->
-    <section class="counter-one">
-        <div class="container">
-            <div class="row">
-                <div class="col-xl-12">
-                    <div class="counter-one__inner">
-                        <ul class="list-unstyled counter-one__list">
-                            <li class="counter-one__single wow fadeInLeft" data-wow-delay="100ms">
-                                <div class="counter-one__icon">
-                                    <span class="icon-size"></span>
-                                </div>
-                                <div class="counter-one__content-box count-box">
-                                    <h3 class="count-text" data-stop="{{ $configuration->areas_building ?? '' }}" data-speed="1500">00</h3>
-                                    <p class="counter-one__text">Area Bangunan</p>
-                                </div>
-                            </li>
-                            <li class="counter-one__single wow fadeInLeft" data-wow-delay="200ms">
-                                <div class="counter-one__icon">
-                                    <span class="icon-parking"></span>
-                                </div>
-                                <div class="counter-one__content-box count-box">
-                                    <h3 class="count-text" data-stop="{{ $configuration->parkings_building ?? '' }}" data-speed="1500">00</h3>
-                                    <p class="counter-one__text">Parkir Mobil</p>
-                                </div>
-                            </li>
-                            <li class="counter-one__single wow fadeInLeft" data-wow-delay="300ms">
-                                <div class="counter-one__icon">
-                                    <span class="icon-apartments"></span>
-                                </div>
-                                <div class="counter-one__content-box count-box">
-                                    <h3 class="count-text" data-stop="{{ $configuration->units_building ?? '' }}" data-speed="1500">00</h3>
-                                    <p class="counter-one__text">Tipe Unit</p>
-                                </div>
-                            </li>
-                            <li class="counter-one__single wow fadeInLeft" data-wow-delay="400ms">
-                                <div class="counter-one__icon">
-                                    <span class="icon-hotel-bed"></span>
-                                </div>
-                                <div class="counter-one__content-box count-box">
-                                    <h3 class="count-text" data-stop="{{ $configuration->bedrooms_building ?? '' }}" data-speed="1500">00</h3>
-                                    <p class="counter-one__text">Kamar Tidur</p>
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <!--Counter One End-->
+    <script>
+        const servicesSwiper = new Swiper('.services-slider', {
+            loop: true,
+            spaceBetween: 20,
+            slidesPerView: 4,
+            autoplay: {
+                delay: 3000,
+                disableOnInteraction: false,
+            },
+            breakpoints: {
+                320: {
+                    slidesPerView: 1,
+                    spaceBetween: 10,
+                },
+                768: {
+                    slidesPerView: 2,
+                    spaceBetween: 15,
+                },
+                992: {
+                    slidesPerView: 3,
+                    spaceBetween: 20,
+                },
+                1200: {
+                    slidesPerView: 4,
+                    spaceBetween: 30,
+                },
+            },
+        });
+    </script>
 
-    <!--Feature One Start-->
-    <section class="feature-one">
-        <div class="feature-one__bg-box">
-            <div class="feature-one__bg"
-                style="background-image: url(assetsfront/images/backgrounds/feature-one-bg.jpg);"></div>
-        </div>
-        <div class="feature-one__shape-1 float-bob-x">
-            <img src="assetsfront/images/shapes/feature-one-shape-1.png" alt="">
-        </div>
-        <div class="container">
-            <div class="row">
-                <div class="col-xl-5">
-                    <div class="feature-one__left">
-                        <div class="section-title text-left">
-                            <span class="section-title__tagline">Fitur utama</span>
-                            <h2 class="section-title__title">
-                                Fitur properti utama kami</h2>
-                        </div>
-                        <p class="feature-one__text">Pengalaman Tak Tertandingi Nikmati pengalaman yang luar biasa dengan layanan terbaik yang kami tawarkan, dirancang khusus untuk memenuhi kebutuhan Anda dengan kualitas yang tak tertandingi.</p>
-                        <div class="feature-one__video-link">
-                            <a href="https://www.youtube.com/watch?v=Get7rqXYrbQ" class="video-popup">
-                                <div class="feature-one__video-icon">
-                                    <span class="fa fa-play"></span>
-                                    <i class="ripple"></i>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="feature-one__counter-box">
-                            <ul class="feature-one__counter-list list-unstyled">
-                                <li>
-                                    <div class="feature-one__counter-content-box">
-                                        <div class="feature-one__counter-count-box count-box">
-                                            <h3 class="count-text" data-stop="{{ $configuration->units_building ?? '' }}" data-speed="1500">00</h3>
-                                            <span class="feature-one__counter-plus">+</span>
-                                        </div>
-                                        <p class="feature-one__counter-text">Total Tipe Unit</p>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="feature-one__counter-content-box">
-                                        <div class="feature-one__counter-count-box count-box">
-                                            <h3 class="count-text" data-stop="{{ $configuration->features_building ?? '' }}" data-speed="1500">00</h3>
-                                            <span class="feature-one__counter-plus">+</span>
-                                        </div>
-                                        <p class="feature-one__counter-text">Kualitas Fitur</p>
-                                    </div>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-xl-7">
-                    <div class="feature-one__right">
-                        <div class="row">
-                            <!--Feature One Single Start-->
-                            @foreach ($superioritys as $superiority)
 
-                            <div class="col-xl-6 col-lg-6 col-md-6 wow fadeInUp" data-wow-delay="100ms">
-                                <div class="feature-one__single">
-                                    <div class="feature-one__single-inner">
-                                        <div class="feature-one__icon">
-                                           {!! $superiority->icon !!}
-                                        </div>
-                                        <h3 class="feature-one__title"><a href="services.html">{{ $superiority->title }}</a>
-                                        </h3>
-                                        <p class="feature-one__text">{!! $superiority->description !!}</p>
-                                        <div class="feature-one__btn">
-                                            <a href="services.html"> <i class="fa fa-arrow-right"></i>Hubungi</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            @endforeach
-                            <!--Feature One Single End-->
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <!--Feature One End-->
 
-    <!--Floor Plan Start-->
-    <section class="floor-plan">
-        <div class="container">
-            <div class="section-title text-center">
-                <span class="section-title__tagline">Villa plans</span>
-                <h2 class="section-title__title">Apartment plans</h2>
-                <p class="floor-plan__text">Retro four loko ethical, distillery lomo meh mixtape vice plaid palo
-                    santo
-                    live-edge ugh banjo marfa lyft. <br> Pour-over distillery keytar activated charcoal. Snackwave
-                    blue
-                    bottle bespoke af farm-to-table <br> 3 wolf moon, beard helvetica godard hell of. Schli hot
-                    chicken
-                    kombucha.</p>
-            </div>
-            <div class="floor-plan__main-tab-box tabs-box">
-                <ul class="tab-buttons clearfix list-unstyled">
-                    <li data-tab="#penthouse" class="tab-btn active-btn"><span>Penthouse</span></li>
-                    <li data-tab="#stuido" class="tab-btn"><span>Stuido</span></li>
-                    <li data-tab="#duplex" class="tab-btn"><span>Duplex</span></li>
-                </ul>
-                <div class="tabs-content">
-                    <!--tab-->
-                    <div class="tab active-tab" id="penthouse">
-                        <div class="floor-plan__tab-content-inner">
-                            <div class="floor-plan__tab-content-left">
-                                <ul class="list-unstyled floor-plan__tab-content-details">
-                                    <li>
-                                        <p>Total area</p>
-                                        <span>2800 Sq. Ft</span>
-                                    </li>
-                                    <li>
-                                        <p>Floor no.</p>
-                                        <span>2nd</span>
-                                    </li>
-                                    <li>
-                                        <p>Current status</p>
-                                        <span>Available</span>
-                                    </li>
-                                    <li>
-                                        <p>No. of rooms</p>
-                                        <span>04</span>
-                                    </li>
-                                    <li>
-                                        <p>Parking available</p>
-                                        <span>Yes</span>
-                                    </li>
-                                    <li>
-                                        <p>Price from</p>
-                                        <span>$4500</span>
-                                    </li>
-                                </ul>
-                            </div>
-                            <div class="floor-plan__tab-content-righ">
-                                <img src="assetsfront/images/resources/floor-plan-tab-content-img-1.png" alt="">
-                            </div>
-                        </div>
-                    </div>
-                    <!--tab-->
-                    <div class="tab " id="stuido">
-                        <div class="floor-plan__tab-content-inner">
-                            <div class="floor-plan__tab-content-left">
-                                <ul class="list-unstyled floor-plan__tab-content-details">
-                                    <li>
-                                        <p>Total area</p>
-                                        <span>2800 Sq. Ft</span>
-                                    </li>
-                                    <li>
-                                        <p>Floor no.</p>
-                                        <span>2nd</span>
-                                    </li>
-                                    <li>
-                                        <p>Current status</p>
-                                        <span>Available</span>
-                                    </li>
-                                    <li>
-                                        <p>No. of rooms</p>
-                                        <span>04</span>
-                                    </li>
-                                    <li>
-                                        <p>Parking available</p>
-                                        <span>Yes</span>
-                                    </li>
-                                    <li>
-                                        <p>Price from</p>
-                                        <span>$4500</span>
-                                    </li>
-                                </ul>
-                            </div>
-                            <div class="floor-plan__tab-content-righ">
-                                <img src="assetsfront/images/resources/floor-plan-tab-content-img-1.png" alt="">
-                            </div>
-                        </div>
-                    </div>
-                    <!--tab-->
-                    <div class="tab " id="duplex">
-                        <div class="floor-plan__tab-content-inner">
-                            <div class="floor-plan__tab-content-left">
-                                <ul class="list-unstyled floor-plan__tab-content-details">
-                                    <li>
-                                        <p>Total area</p>
-                                        <span>2800 Sq. Ft</span>
-                                    </li>
-                                    <li>
-                                        <p>Floor no.</p>
-                                        <span>2nd</span>
-                                    </li>
-                                    <li>
-                                        <p>Current status</p>
-                                        <span>Available</span>
-                                    </li>
-                                    <li>
-                                        <p>No. of rooms</p>
-                                        <span>04</span>
-                                    </li>
-                                    <li>
-                                        <p>Parking available</p>
-                                        <span>Yes</span>
-                                    </li>
-                                    <li>
-                                        <p>Price from</p>
-                                        <span>$4500</span>
-                                    </li>
-                                </ul>
-                            </div>
-                            <div class="floor-plan__tab-content-righ">
-                                <img src="assetsfront/images/resources/floor-plan-tab-content-img-1.png" alt="">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <!--Floor Plan End-->
-
-    <!--Apartments One Start-->
-    <section class="apartments-one">
-        <div class="container">
-            <div class="section-title text-center">
-                <span class="section-title__tagline">Kompleks</span>
-                <h2 class="section-title__title">Pilih Tipe Kamu</h2>
-            </div>
-            <div class="row">
-                <!--Apartments One Single Start-->
-                <div class="col-xl-3 col-lg-6 col-md-6">
-                    <div class="apartments-one__single">
-                        <div class="apartments-one__img">
-                            <img src="assetsfront/images/apartment/apartment-1-1.jpg" alt="">
-                            <div class="apartments-one__title-box">
-                                <h3 class="apartments-one__title"><a href="apartment-details.html">Studio
-                                        apartment</a></h3>
-                            </div>
-                            <div class="apartments-one__hover">
-                                <h3 class="apartments-one__hover-title"><a href="apartment-details.html">Studio
-                                        apartment</a></h3>
-                                <p class="apartments-one__hover-text">There are many type of variations <br> pass
-                                    not available</p>
-                                <div class="apartments-one__arrow">
-                                    <a href="apartment-details.html"><span class="icon-right-arrow"></span> </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!--Apartments One Single End-->
-                <!--Apartments One Single Start-->
-                <div class="col-xl-3 col-lg-6 col-md-6">
-                    <div class="apartments-one__single">
-                        <div class="apartments-one__img">
-                            <img src="assetsfront/images/apartment/apartment-1-2.jpg" alt="">
-                            <div class="apartments-one__title-box">
-                                <h3 class="apartments-one__title"><a href="apartment-details.html">Luxury
-                                        apartment</a></h3>
-                            </div>
-                            <div class="apartments-one__hover">
-                                <h3 class="apartments-one__hover-title"><a href="apartment-details.html">Luxury
-                                        apartment</a></h3>
-                                <p class="apartments-one__hover-text">There are many type of variations <br> pass
-                                    not available</p>
-                                <div class="apartments-one__arrow">
-                                    <a href="apartment-details.html"><span class="icon-right-arrow"></span> </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!--Apartments One Single End-->
-                <!--Apartments One Single Start-->
-                <div class="col-xl-3 col-lg-6 col-md-6">
-                    <div class="apartments-one__single">
-                        <div class="apartments-one__img">
-                            <img src="assetsfront/images/apartment/apartment-1-3.jpg" alt="">
-                            <div class="apartments-one__title-box">
-                                <h3 class="apartments-one__title"><a href="apartment-details.html">Deluxe
-                                        apartment</a></h3>
-                            </div>
-                            <div class="apartments-one__hover">
-                                <h3 class="apartments-one__hover-title"><a href="apartment-details.html">Deluxe
-                                        apartment</a></h3>
-                                <p class="apartments-one__hover-text">There are many type of variations <br> pass
-                                    not available</p>
-                                <div class="apartments-one__arrow">
-                                    <a href="apartment-details.html"><span class="icon-right-arrow"></span> </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!--Apartments One Single End-->
-                <!--Apartments One Single Start-->
-                <div class="col-xl-3 col-lg-6 col-md-6">
-                    <div class="apartments-one__single">
-                        <div class="apartments-one__img">
-                            <img src="assetsfront/images/apartment/apartment-1-4.jpg" alt="">
-                            <div class="apartments-one__title-box">
-                                <h3 class="apartments-one__title"><a href="apartment-details.html">Modern
-                                        apartment</a></h3>
-                            </div>
-                            <div class="apartments-one__hover">
-                                <h3 class="apartments-one__hover-title"><a href="apartment-details.html">Modern
-                                        apartment</a></h3>
-                                <p class="apartments-one__hover-text">There are many type of variations <br> pass
-                                    not available</p>
-                                <div class="apartments-one__arrow">
-                                    <a href="apartment-details.html"><span class="icon-right-arrow"></span> </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!--Apartments One Single End-->
-            </div>
-        </div>
-    </section>
-    <!--Apartments One End-->
-
-    <!--Neighborhoods Start-->
-    <section class="neighborhoods">
-        <div class="neighborhoods-bg" style="background-image: url(assetsfront/images/backgrounds/neighborhoods-bg.jpg);">
-        </div>
-        <div class="container">
-            <div class="section-title text-center">
-                <span class="section-title__tagline">Area di sekitar</span>
-                <h2 class="section-title__title">Lingkungan</h2>
-            </div>
-            <div class="row">
-                <div class="col-xl-4 col-lg-5">
-                    <div class="neighborhoods__left">
-                        <div class="neighborhoods__faq">
-                            <div class="accrodion-grp" data-grp-name="faq-one-accrodion">
-                                <div class="accrodion active">
-                                    <div class="accrodion-title">
-                                        <h4>{{ $contact->address ?? '' }}</h4>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-xl-8 col-lg-7">
-                    <div class="neighborhoods__right">
-                        <div class="neighborhoods__img-box">
-                            <div class="">
-                                <iframe
-                                src="{{ $contact->map ?? '' }}"
-                                width="100%"
-                                height="450"
-                                style="border:0;"
-                                allowfullscreen=""
-                                loading="lazy"
-                                referrerpolicy="no-referrer-when-downgrade">
-                            </iframe>
-
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <!--Neighborhoods End-->
-
-    <!--Brand One Start-->
-    <section class="brand-one">
-        <div class="container">
-            <div class="row">
-                <div class="col-xl-12">
-                    <div class="brand-one__inner">
-                        <div class="thm-swiper__slider swiper-container"
-                            data-swiper-options='{"spaceBetween": 100, "slidesPerView": 5, "autoplay": { "delay": 5000 }, "breakpoints": {
-                    "0": {
-                        "spaceBetween": 30,
-                        "slidesPerView": 2
-                    },
-                    "375": {
-                        "spaceBetween": 30,
-                        "slidesPerView": 2
-                    },
-                    "575": {
-                        "spaceBetween": 30,
-                        "slidesPerView": 3
-                    },
-                    "767": {
-                        "spaceBetween": 50,
-                        "slidesPerView": 4
-                    },
-                    "991": {
-                        "spaceBetween": 50,
-                        "slidesPerView": 5
-                    },
-                    "1199": {
-                        "spaceBetween": 100,
-                        "slidesPerView": 6
-                    }
-                }}'>
-                            <div class="swiper-wrapper">
-                                @foreach ($mitras as $mitra)
-                                <div class="swiper-slide">
-                                    <img src="{{ $mitra->path ?? '' }}" alt="{{ $mitra->title ?? '' }}" width="107px" height="110px">
-                                </div>
-                                @endforeach
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <!--Brand One End-->
-
-    <!--Contact One Start-->
-    <section class="contact-one">
-        <div class="container">
-            <div class="row">
-                <div class="col-xl-4 col-lg-5">
-                    <div class="contact-one__left">
-                        <div class="section-title text-left">
-                            <span class="section-title__tagline">Kontak Sekarang</span>
-                            <h2 class="section-title__title">Hubungi kami</h2>
-                        </div>
-                        <div class="contact-one__person">
-                            <div class="contact-one__person-img">
-                                <img src="assetsfront/images/resources/contact-one-person-img-1.jpg" alt="">
-                            </div>
-                            <div class="contact-one__person-content">
-                                <h3 class="contact-one__person-name">Kevin Smith</h3>
-                                <p class="contact-one__person-sub-title">Certified agent</p>
-                            </div>
-                        </div>
-                        <p class="contact-one__text-1">Lorem ipsum dolor sit amet, consecte adipiscing elit. In hac
-                            habitasse platea dictumst. Duis porta, quam ut finibus ultrices.</p>
-                        <ul class="list-unstyled contact-one__list">
-                            <li>
-                                <div class="icon">
-                                    <i class="fas fa-phone-alt"></i>
-                                </div>
-                                <div class="content">
-                                    <p>Ada Pertannyaan?</p>
-                                    <h4> <span>Gratis</span> <a href="https://wa.me/{{ $contact->phone_number ?? '' }}" target="blank">+{{ $contact->phone_number ?? '' }}</a></h4>
-                                </div>
-                            </li>
-                            <li>
-                                <div class="icon">
-                                    <i class="fas fa-envelope"></i>
-                                </div>
-                                <div class="content">
-                                    <p>Tulis Email</p>
-                                    <h4><a href="mailto:{{ $contact->email_address ?? '' }}">{{ $contact->email_address ?? '' }}</a></h4>
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="col-xl-8 col-lg-7">
-                    <div class="contact-one__right">
-                        <div class="row">
-                            <div class="contact-one__form-box">
-                                <form action="assetsfront/inc/sendemail.php"
-                                    class="contact-one__form contact-one-validated" novalidate="novalidate">
-                                    <div class="row">
-                                        <div class="col-xl-6 col-lg-6 col-md-6">
-                                            <div class="contact-one__input-box">
-                                                <input type="text" placeholder="Your name" name="name">
-                                            </div>
-                                        </div>
-                                        <div class="col-xl-6 col-lg-6 col-md-6">
-                                            <div class="contact-one__input-box">
-                                                <input type="email" placeholder="Email address" name="email">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-xl-12">
-                                            <div class="contact-one__input-box text-message-box">
-                                                <textarea name="message" placeholder="Write message"></textarea>
-                                            </div>
-                                            <div class="contact-one__btn-box">
-                                                <a href="about.html" class="thm-btn contact-one__btn">Send a
-                                                    Message</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <!--Contact One End-->
-
-    <!--News One Start-->
-    <section class="news-one">
-        <div class="container">
-            <div class="section-title text-center">
-                <span class="section-title__tagline">What’s Happening</span>
-                <h2 class="section-title__title">Latest news updates <br> & articles</h2>
-            </div>
-            <div class="row">
-                <!--News One Single Start-->
-                <div class="col-xl-4 col-lg-4 wow fadeInUp" data-wow-delay="100ms">
-                    <div class="news-one__single">
-                        <div class="news-one__img">
-                            <img src="assetsfront/images/blog/news-1-1.jpg" alt="">
-                        </div>
-                        <div class="news-one__content-box">
-                            <div class="news-one__date">
-                                <p>18 april</p>
-                            </div>
-                            <div class="news-one__content">
-                                <p class="news-one__author">by John Smith</p>
-                                <h3 class="news-one__title"><a href="news-details.html">Let’s understand the
-                                        different types of luxury spaces</a></h3>
-                            </div>
-                            <div class="news-one__bottom">
-                                <a href="news-details.html" class="news-one__more"> <i class="fa fa-arrow-right"></i>
-                                    Read More</a>
-                                <a href="news-details.html" class="news-one__comments"> <i class="fas fa-comments"></i> 2
-                                    Comments</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!--News One Single End-->
-                <!--News One Single Start-->
-                <div class="col-xl-4 col-lg-4 wow fadeInUp" data-wow-delay="200ms">
-                    <div class="news-one__single">
-                        <div class="news-one__img">
-                            <img src="assetsfront/images/blog/news-1-2.jpg" alt="">
-                        </div>
-                        <div class="news-one__content-box">
-                            <div class="news-one__date">
-                                <p>18 april</p>
-                            </div>
-                            <div class="news-one__content">
-                                <p class="news-one__author">by John Smith</p>
-                                <h3 class="news-one__title"><a href="news-details.html">Lorem Ipsum has been the
-                                        industry's standard dummy</a></h3>
-                            </div>
-                            <div class="news-one__bottom">
-                                <a href="news-details.html" class="news-one__more"> <i class="fa fa-arrow-right"></i>
-                                    Read More</a>
-                                <a href="news-details.html" class="news-one__comments"> <i class="fas fa-comments"></i> 2
-                                    Comments</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!--News One Single End-->
-                <!--News One Single Start-->
-                <div class="col-xl-4 col-lg-4 wow fadeInUp" data-wow-delay="300ms">
-                    <div class="news-one__single">
-                        <div class="news-one__img">
-                            <img src="assetsfront/images/blog/news-1-3.jpg" alt="">
-                        </div>
-                        <div class="news-one__content-box">
-                            <div class="news-one__date">
-                                <p>18 april</p>
-                            </div>
-                            <div class="news-one__content">
-                                <p class="news-one__author">by John Smith</p>
-                                <h3 class="news-one__title"><a href="news-details.html">The point of using Lorem
-                                        Ipsum is that it has a more</a></h3>
-                            </div>
-                            <div class="news-one__bottom">
-                                <a href="news-details.html" class="news-one__more"> <i class="fa fa-arrow-right"></i>
-                                    Read More</a>
-                                <a href="news-details.html" class="news-one__comments"> <i class="fas fa-comments"></i> 2
-                                    Comments</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!--News One Single End-->
-            </div>
-        </div>
-    </section>
-    <!--News One End-->
+    <!-- Service End -->
 
     <!--Gallery One Start-->
-    <section class="gallery-one">
-        <div class="gallery-one__container">
-            <div class="gallery-one__carousel thm-owl__carousel owl-theme owl-carousel"
+    <section class="gallery-one" id="gallery">
+        <div class="container">
+            <div class="gallery-one__carousel owl-carousel owl-theme"
                 data-owl-options='{
                 "items": 5,
-                "margin": 0,
+                "margin": 10,
                 "smartSpeed": 700,
-                "loop":true,
-                "autoplay": 6000,
-                "nav":false,
-                "dots":false,
-                "navText": ["<span class=\"fa fa-angle-left\"></span>","<span class=\"fa fa-angle-right\"></span>"],
-                "responsive":{
-                    "0":{
-                        "items":1
+                "loop": true,
+                "autoplay": true,
+                "autoplayTimeout": 6000,
+                "nav": true,
+                "dots": false,
+                "navText": ["<span class=\"fa fa-angle-left\"></span>", "<span class=\"fa fa-angle-right\"></span>"],
+                "responsive": {
+                    "0": {
+                        "items": 1
                     },
-                    "768":{
-                        "items":3
+                    "768": {
+                        "items": 3
                     },
-                    "992":{
+                    "992": {
                         "items": 4
                     },
-                    "1200":{
+                    "1200": {
                         "items": 5
                     }
                 }
             }'>
-                <!--Gallery One Single Start-->
+                <!-- Gallery Item Start -->
                 @foreach ($gallerys as $gallery)
-                <div class="item">
                     <div class="gallery-one__single">
                         <div class="gallery-one__img">
-                            <img src="{{ asset($gallery->path) }}" alt="">
+                            <img src="{{ asset($gallery->path) }}" alt="Gallery Image"
+                                style="width:250px; height:250px;">
                             <div class="gallery-one__icon">
                                 <a class="img-popup" href="{{ asset($gallery->path) }}"><span
                                         class="fa fa-plus"></span></a>
                             </div>
                         </div>
                     </div>
-                </div>
                 @endforeach
-                <!--Gallery One Single End-->
+                <!-- Gallery Item End -->
             </div>
         </div>
     </section>
+
+    <!-- Owl Carousel CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/owl-carousel/1.3.3/owl.carousel.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/owl-carousel/1.3.3/owl.theme.default.min.css">
+
+    <!-- Owl Carousel JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/owl-carousel/1.3.3/owl.carousel.min.js"></script>
+
+    <!-- Custom CSS for Image Handling -->
+    <style>
+        .gallery-one__img {
+            position: relative;
+        }
+
+        .gallery-one__img img {
+            height: auto;
+            object-fit: cover;
+        }
+
+        .gallery-one__icon {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: rgba(0, 0, 0, 0.5);
+            padding: 10px;
+            border-radius: 50%;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .gallery-one__img:hover .gallery-one__icon {
+            opacity: 1;
+        }
+
+        .img-popup {
+            color: #fff;
+            font-size: 24px;
+        }
+    </style>
+
+    <script>
+        // Initialize Owl Carousel
+        $(document).ready(function() {
+            $('.owl-carousel').owlCarousel(JSON.parse($('.gallery-one__carousel').attr('data-owl-options')));
+        });
+    </script>
+
+
     <!--Gallery One End-->
-@endsection
+
+    <!-- Testimonial Start -->
+    <div class="container-xxl py-5 wow fadeInUp" data-wow-delay="0.1s">
+        <div class="container">
+            <div class="text-center wow fadeInUp" data-wow-delay="0.1s">
+                <div class="bg-primary mb-3 mx-auto" style="width: 60px; height: 2px;"></div>
+                <h1 class="display-5 mb-5">Testimonial</h1>
+            </div>
+            <div class="owl-carousel testimonial-carousel wow fadeInUp" data-wow-delay="0.1s">
+                @foreach ($testimonials as $testimonial)
+                    <div class="testimonial-item text-center"
+                        data-dot="<img class='img-fluid' src='img/testimonial-1.jpg' alt=''>">
+                        <p class="fs-5">{!! $testimonial->description !!}</p>
+                        <h4>{{ $testimonial->name }}</h4>
+                        <!-- Testimonial End -->
+                        <span class="text-primary">{{ $testimonial->position }}</span>
+                    </div>
+                @endforeach
+            </div>
+        </div>
+    </div>
+
+    <!-- Mitra -->
+    <section id="clients" class="clients section">
+        <div class="container">
+            <div class="swiper mitra-slider">
+                <div class="swiper-wrapper">
+                    @foreach ($mitras as $item)
+                        <div class="swiper-slide">
+                            <img src="{{ asset($item->path) }}" class="img-fluid custom-img" alt="Mitra Image"
+                                style="max-width: 107px; width:107px; max-height: 110px; height:110px;">
+                        </div>
+                    @endforeach
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        const mitraSwiper = new Swiper('.mitra-slider', {
+            loop: true,
+            speed: 600,
+            autoplay: {
+                delay: 3000,
+                disableOnInteraction: false,
+            },
+            slidesPerView: 10,
+            spaceBetween: 20,
+            pagination: {
+                el: '.swiper-pagination',
+                type: 'bullets',
+                clickable: true,
+            },
+            breakpoints: {
+                320: {
+                    slidesPerView: 2,
+                    spaceBetween: 40,
+                },
+                480: {
+                    slidesPerView: 3,
+                    spaceBetween: 60,
+                },
+                640: {
+                    slidesPerView: 4,
+                    spaceBetween: 80,
+                },
+                992: {
+                    slidesPerView: 10,
+                    spaceBetween: 20,
+                },
+            },
+        });
+    </script>
+
+
+    <!-- Swiper CSS -->
+    <link href="https://unpkg.com/swiper/swiper-bundle.min.css" rel="stylesheet">
+
+    <!-- Swiper JS -->
+    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+
+    <!-- Custom CSS for Images -->
+    <style>
+        .swiper-container {
+            width: 100%;
+            height: auto;
+        }
+
+        .swiper-slide {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-shrink: 0;
+        }
+
+        .custom-img {
+            max-width: 100%;
+            height: auto;
+            object-fit: contain;
+        }
+    </style>
+
+    <script>
+        // Initialize Swiper
+        var swiper = new Swiper('.swiper-container', JSON.parse(document.querySelector('.swiper-config').textContent));
+    </script>
+
+
+
+
+
+    <!-- Footer Start -->
+    <div class="container-fluid bg-dark text-secondary footer mt-5 py-5 wow fadeIn" data-wow-delay="0.1s">
+        <div class="container py-5">
+            <div class="row g-5">
+                <div class="col col-md">
+                    <h5 class="text-light mb-4">{{ $about->description ?? '' }}</h5>
+                    <div class="position-relative w-100">
+                        <iframe src="{{ $contact->map ?? '' }}" frameborder="0"></iframe>
+                    </div>
+                </div>
+                <div class="col col-md">
+                    <h5 class="text-light mb-4">Nav</h5>
+                    <a class="btn btn-link" href="#">Beranda</a>
+                    <a class="btn btn-link" href="#about">Tentang</a>
+                    <a class="btn btn-link" href="#services">Layanan</a>
+                    <a class="btn btn-link" href="#gallery">Galeri</a>
+                    <a class="btn btn-link" href="https://wa.me/{{ $contact->phone_number ?? '' }}">Kontak</a>
+                </div>
+
+                <div class="col col-md">
+                    <h5 class="text-light mb-4">Alamat</h5>
+                    <p class="mb-2"><i class="fa fa-map-marker-alt me-3"></i>{{ $contact->address ?? '' }}</p>
+                    <p class="mb-2"><i class="fa fa-phone-alt me-3"></i>+{{ $contact->phone_number ?? '' }}</p>
+                    <p class="mb-2"><i class="fa fa-envelope me-3"></i>{{ $contact->email_address ?? '' }}</p>
+                    <div class="d-flex pt-2">
+                        @if ($contact->phone_number)
+                            <a class="btn btn-square btn-outline-secondary rounded-circle me-2"
+                                href="https://wa.me/{{ $contact->phone_number }}" target="_blank">
+                                <i class="fab fa-whatsapp"></i>
+                            </a>
+                        @endif
+
+                        @if ($contact->email_address)
+                            <a class="btn btn-square btn-outline-secondary rounded-circle me-2"
+                                href="mailto:{{ $contact->email_address }}" target="_blank">
+                                <i class="fab fa-google"></i>
+                            </a>
+                        @endif
+
+                        @if ($contact->facebook)
+                            <a class="btn btn-square btn-outline-secondary rounded-circle me-2"
+                                href="{{ $contact->facebook }}" target="_blank">
+                                <i class="fab fa-facebook-f"></i>
+                            </a>
+                        @endif
+
+                        @if ($contact->instagram)
+                            <a class="btn btn-square btn-outline-secondary rounded-circle me-2"
+                                href="{{ $contact->instagram }}" target="_blank">
+                                <i class="fab fa-instagram"></i>
+                            </a>
+                        @endif
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Footer End -->
+
+
+    <!-- Copyright Start -->
+    <div class="container-fluid py-4" style="background: #000000;">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
+                    {{ $configuration->footer ?? '' }}
+                </div>
+                <div class="col-md-6 text-center text-md-end">
+                    <!--/*** This template is free as long as you keep the footer author’s credit link/attribution link/backlink. If you'd like to use the template without the footer author’s credit link/attribution link/backlink, you can purchase the Credit Removal License from "https://htmlcodex.com/credit-removal". Thank you for your support. ***/-->
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Copyright End -->
+
+
+    <!-- Back to Top -->
+    <a href="#" class="btn btn-lg btn-primary btn-lg-square rounded-circle back-to-top"><i
+            class="bi bi-arrow-up"></i></a>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- JavaScript Libraries -->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="{{ asset('assetsfront/lib/wow/wow.min.js') }}"></script>
+    <script src="{{ asset('assetsfront/lib/easing/easing.min.js') }}"></script>
+    <script src="{{ asset('assetsfront/lib/waypoints/waypoints.min.js') }}"></script>
+    <script src="{{ asset('assetsfront/lib/counterup/counterup.min.js') }}"></script>
+    <script src="{{ asset('assetsfront/lib/owlcarousel/owl.carousel.min.js') }}"></script>
+    <script src="{{ asset('assetsfront/lib/isotope/isotope.pkgd.min.js') }}"></script>
+    <script src="{{ asset('assetsfront/lib/lightbox/js/lightbox.min.js') }}"></script>
+
+    <script src="{{ asset('assetsfront/js/aport.js') }}"></script>
+    <!-- Template Javascript -->
+    <script src="{{ asset('assetsfront/js/main.js') }}"></script>
+
+
+</body>
+
+</html>

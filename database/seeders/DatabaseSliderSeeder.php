@@ -14,17 +14,17 @@ class DatabaseSliderSeeder extends Seeder
     public function run(): void
     {
         Slider::create([
-            'path' => 'uploads/sliders/slider1.jpeg',
-            'title' => 'Temukan Pesona Desa Korea',
-            'overview' => 'Temukan Pesona Desa Korea',
-            'description' => 'Temukan Pesona Desa Korea',
+            'path' => 'uploads/sliders/slider1.jpg',
+            'title' => 'Pengawasan Cerdas untuk Keamanan Anda',
+            'overview' => 'Pengawasan Cerdas untuk Keamanan Anda',
+            'description' => 'Pengawasan Cerdas untuk Keamanan Anda',
         ]);
 
         Slider::create([
-            'path' => 'uploads/sliders/slider2.jpeg',
-            'title' => 'Merasakan Keindahan Tradisi Korea',
-            'overview' => 'Merasakan Keindahan Tradisi Korea',
-            'description' => 'Merasakan Keindahan Tradisi Korea',
+            'path' => 'uploads/sliders/slider2.jpg',
+            'title' => 'Teknologi HDC CCTV, Pilihan Terbaik untuk Perlindungan',
+            'overview' => 'Teknologi HDC CCTV, Pilihan Terbaik untuk Perlindungan',
+            'description' => 'Teknologi HDC CCTV, Pilihan Terbaik untuk Perlindungan',
         ]);
     }
 }

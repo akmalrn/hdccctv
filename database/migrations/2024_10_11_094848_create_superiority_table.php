@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('superiority', function (Blueprint $table) {
             $table->id();
-            $table->string('icon');
+            $table->string('path');
             $table->string('title');
             $table->text('description');
             $table->timestamps();

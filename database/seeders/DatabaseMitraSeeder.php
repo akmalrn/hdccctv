@@ -29,7 +29,7 @@ class DatabaseMitraSeeder extends Seeder
         ]);
 
         Partner::Create([
-            'path' => 'uploads/partners/mitra4.png',
+            'path' => 'uploads/partners/mitra4.jpg',
             'title' => 'Mitra 4',
         ]);
 
@@ -40,6 +40,46 @@ class DatabaseMitraSeeder extends Seeder
 
         Partner::Create([
             'path' => 'uploads/partners/mitra6.png',
+            'title' => 'Mitra 6',
+        ]);
+
+        Partner::Create([
+            'path' => 'uploads/partners/mitra7.jpg',
+            'title' => 'Mitra 6',
+        ]);
+
+        Partner::Create([
+            'path' => 'uploads/partners/mitra8.jpg',
+            'title' => 'Mitra 6',
+        ]);
+
+        Partner::Create([
+            'path' => 'uploads/partners/mitra9.png',
+            'title' => 'Mitra 6',
+        ]);
+
+        Partner::Create([
+            'path' => 'uploads/partners/mitra10.png',
+            'title' => 'Mitra 6',
+        ]);
+
+        Partner::Create([
+            'path' => 'uploads/partners/mitra11.jpg',
+            'title' => 'Mitra 6',
+        ]);
+
+        Partner::Create([
+            'path' => 'uploads/partners/mitra12.jpg',
+            'title' => 'Mitra 6',
+        ]);
+
+        Partner::Create([
+            'path' => 'uploads/partners/mitra13.png',
+            'title' => 'Mitra 6',
+        ]);
+
+        Partner::Create([
+            'path' => 'uploads/partners/mitra14.png',
             'title' => 'Mitra 6',
         ]);
     }

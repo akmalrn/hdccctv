@@ -46,10 +46,6 @@ Route::middleware(['auth'])->group(function () {
 
     //service
     Route::resource('/admin-dashboard/services', App\Http\Controllers\admin\ServiceController::class);
-    //area
-    Route::resource('/admin-dashboard/categories-services', App\Http\Controllers\admin\CategoryServiceController::class);
-    //type
-    Route::resource('/admin-dashboard/type-services', App\Http\Controllers\admin\TypeServiceController::class);
 
     //gallery
     Route::resource('/admin-dashboard/gallery', App\Http\Controllers\admin\GalleryController::class);
@@ -57,22 +53,9 @@ Route::middleware(['auth'])->group(function () {
     //partner
     Route::resource('/admin-dashboard/partner', App\Http\Controllers\admin\PartnerController::class);
 
-    //blog
-    Route::resource('/admin-dashboard/blogs', App\Http\Controllers\admin\BlogController::class);
-    //category
-    Route::resource('/admin-dashboard/categories-blogs', App\Http\Controllers\admin\CategoryBlogController::class);
-
-    //pricing
-    Route::resource('/admin-dashboard/pricings', App\Http\Controllers\admin\PricingController::class);
-
-    //video
-    Route::resource('/admin-dashboard/videos', App\Http\Controllers\admin\VideoController::class);
-
     //testimonial
     Route::resource('/admin-dashboard/testimonial-clients', App\Http\Controllers\admin\TestimonialClientController::class);
 
-    //team
-    Route::resource('/admin-dashboard/our-team', App\Http\Controllers\admin\OurTeamController::class);
 });
 
 Route::get('/', function () {
@@ -81,12 +64,4 @@ Route::get('/', function () {
 
 Route::controller(App\Http\Controllers\FrontendController::class)->group(function () {
     Route::get('/', 'index')->name('index');
-    Route::get('/about', 'about')->name('about');
-    Route::get('/promo', 'promo')->name('promo');
-    Route::get('/services', 'services')->name('services');
-    Route::get('/service/{id}', 'DetailService')->name('detail_service');
-    Route::get('/blog', 'blog')->name('blog');
-    Route::get('/blog/{id}', 'detailblog')->name('blog-detail');
-    Route::get('/contact', 'contact')->name('contact');
-    Route::get('/blogs/search', 'search')->name('blogs.search');
 });

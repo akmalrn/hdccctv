@@ -3,7 +3,7 @@
 
 <head>
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <title>GrahaTekno - Admin Dashboard</title>
+    <title>Wanteknologi - Admin Dashboard</title>
     <meta content="width=device-width, initial-scale=1.0, shrink-to-fit=no" name="viewport" />
     <link rel="icon" href="{{ asset('Wan Logo.png') }}" type="image/x-icon" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
@@ -71,9 +71,9 @@
                     @endforeach
                 </ul>
             `,
-                    icon: 'error',
-                    confirmButtonText: 'OK'
+            confirmButtonText: 'OK'
                 });
+            icon: 'error',
         @endif
 
         function confirmDelete(id) {
@@ -195,7 +195,7 @@
                         <li class="nav-item {{ Request::is('admin-dashboard/why-us') ? 'active' : '' }}">
                             <a href="{{ route('why-us.index') }}">
                                 <i class="fas fa-thumbs-up"></i>
-                                <p>Why Us</p>
+                                <p>apartment features</p>
                                 <span class="badge badge-secondary"></span>
                             </a>
                         </li>
@@ -204,14 +204,6 @@
                             <a href="{{ route('services.index') }}">
                                 <i class="fas fa-hand-holding"></i>
                                 <p>Services</p>
-                                <span class="badge badge-secondary"></span>
-                            </a>
-                        </li>
-
-                        <li class="nav-item {{ Request::is('admin-dashboard/pricings', 'admin-dashboard/pricings/create', 'admin-dashboard/pricings/*/edit', 'admin-dashboard/categories-pricings/create',  'admin-dashboard/categories-pricings/*/edit') ? 'active' : '' }}">
-                            <a href="{{ route('pricings.index') }}">
-                                <i class="fas fa-wallet"></i>
-                                <p>Pricing</p>
                                 <span class="badge badge-secondary"></span>
                             </a>
                         </li>
@@ -232,14 +224,6 @@
                             </a>
                         </li>
 
-                        <li class="nav-item {{ Request::is('admin-dashboard/blogs', 'admin-dashboard/blogs/create', 'admin-dashboard/blogs/*/edit', 'admin-dashboard/categories-blogs/create',  'admin-dashboard/categories-blogs/*/edit') ? 'active' : '' }}">
-                            <a href="{{ route('blogs.index') }}">
-                                <i class="fas fa-pen"></i>
-                                <p>Blog</p>
-                                <span class="badge badge-secondary"></span>
-                            </a>
-                        </li>
-
                         <li class="nav-item {{ Request::is('admin-dashboard/contact', 'admin-dashboard/contact.create', 'admin-dashboard/contact.*.edit') ? 'active' : '' }}">
                             <a href="{{ route('contacts.index') }}">
                                 <i class="fas fa-phone"></i>
@@ -254,66 +238,6 @@
                                 <p>Testimonial Client</p>
                                 <span class="badge badge-secondary"></span>
                             </a>
-                        </li>
-
-                        <li class="nav-item {{ Request::is('admin-dashboard/our-team', 'admin-dashboard/our-team.create', 'admin-dashboard/our-team.*.edit') ? 'active' : '' }}">
-                            <a href="{{ route('our-team.index') }}">
-                                <i class="fas fa-user-friends"></i>
-                                <p>Our Team</p>
-                                <span class="badge badge-secondary"></span>
-                            </a>
-                        </li>
-
-                        <li class="nav-item">
-                            <a data-bs-toggle="collapse" href="#submenu">
-                                <i class="fas fa-bars"></i>
-                                <p>Template DropDown</p>
-                                <span class="caret"></span>
-                            </a>
-                            <div class="collapse" id="submenu">
-                                <ul class="nav nav-collapse">
-                                    <li>
-                                        <a data-bs-toggle="collapse" href="#subnav1">
-                                            <span class="sub-item">DropDown</span>
-                                            <span class="caret"></span>
-                                        </a>
-                                        <div class="collapse" id="subnav1">
-                                            <ul class="nav nav-collapse subnav">
-                                                <li>
-                                                    <a href="#">
-                                                        <span class="sub-item">DropDown</span>
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <a href="#">
-                                                        <span class="sub-item">DropDown</span>
-                                                    </a>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <a data-bs-toggle="collapse" href="#subnav2">
-                                            <span class="sub-item">DropDown 2</span>
-                                            <span class="caret"></span>
-                                        </a>
-                                        <div class="collapse" id="subnav2">
-                                            <ul class="nav nav-collapse subnav">
-                                                <li>
-                                                    <a href="#">
-                                                        <span class="sub-item">DropDown</span>
-                                                    </a>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <span class="sub-item">DropDown 3</span>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
                         </li>
                     </ul>
                 </div>
@@ -355,11 +279,10 @@
                                         <option value="{{ route('slider.index') }}">Slider</option>
                                         <option value="{{ route('about-us.index') }}">About Us</option>
                                         <option value="{{ route('superiority.index') }}">Superiority</option>
-                                        <option value="{{ route('why-us.index') }}">Why Us</option>
+                                        <option value="{{ route('why-us.index') }}">apartment features</option>
                                         <option value="{{ route('services.index') }}">Services</option>
                                         <option value="{{ route('gallery.index') }}">Gallery</option>
                                         <option value="{{ route('partner.index') }}">Partner</option>
-                                        <option value="{{ route('blogs.index') }}">Blog</option>
                                         <!-- Add more options as needed -->
                                     </select>
                                 </div>

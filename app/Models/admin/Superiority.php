@@ -12,7 +12,7 @@ class Superiority extends Model
     protected $table = 'superiority';
 
     protected $fillable = [
-        'icon',
+        'path',
         'title',
         'description',
     ];

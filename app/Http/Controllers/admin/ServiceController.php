@@ -13,38 +13,37 @@ class ServiceController extends Controller
 {
     public function index(Request $request)
     {
-        $categoryservices = CategoryService::all();
-        if ($request->has('category_id') && $request->category_id != '') {
-            $services = Service::where('category_id', $request->category_id)->get();
-        } else {
-            $services = Service::take(11)->get();
-        }
-        return view('backend.service.index', compact('categoryservices', 'services'));
+        $services = Service::all();
+        return view('backend.service.index', compact('services'));
     }
 
     public function create()
     {
-        $typeservices = TypeService::all();
-        $categoryservice = CategoryService::all();
-        return view('backend.service.create', compact('typeservices', 'categoryservice'));
+        return view('backend.service.create');
     }
 
     public function store(Request $request)
     {
         $request->validate([
+            'path' => 'required|image|mimes:jpeg,png,jpg,gif,webp,svg',
             'title' => 'required|string|max:255',
             'overview' => 'required|string',
             'description' => 'required|string',
-            'category_id' => 'required|exists:category_services,id',
-            'type_id' => 'required|exists:type_services,id',
         ]);
+
+        $imageName = null;
+
+        if ($request->hasFile('path')) {
+            $file = $request->file('path');
+            $imageName = time() . '_' . $file->getClientOriginalName();
+            $file->move(('uploads/sliders'), $imageName);
+        }
 
         Service::create([
             'title' => $request->title,
             'overview' => $request->overview,
             'description' => $request->description,
-            'category_id' => $request->category_id,
-            'type_id' => $request->type_id,
+            'path' => $imageName,
         ]);
 
         return redirect()->route('services.index')->with('success', 'Service added successfully.');
@@ -65,21 +64,31 @@ class ServiceController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
+            'path' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp,svg',
             'title' => 'required|string|max:255',
             'overview' => 'required|string',
             'description' => 'required|string',
-            'category_id' => 'required|exists:category_services,id',
-            'type_id' => 'required|exists:type_services,id',
         ]);
 
         $service = Service::findOrFail($id);
+
+        $imageName = $service->path;
+
+        if ($request->hasFile('path')) {
+            if (file_exists(public_path('uploads/sliders/' . $service->path))) {
+                unlink(public_path('uploads/sliders/' . $service->path));
+            }
+
+            $file = $request->file('path');
+            $imageName = time() . '_' . $file->getClientOriginalName();
+            $file->move(public_path('uploads/sliders'), $imageName);
+        }
 
         $service->update([
             'title' => $request->title,
             'overview' => $request->overview,
             'description' => $request->description,
-            'category_id' => $request->category_id,
-            'type_id' => $request->type_id,
+            'path' => $imageName,
         ]);
 
         return redirect()->route('services.index')->with('success', 'Service updated successfully.');

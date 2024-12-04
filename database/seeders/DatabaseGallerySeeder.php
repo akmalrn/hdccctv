@@ -14,7 +14,7 @@ class DatabaseGallerySeeder extends Seeder
     public function run(): void
     {
         Gallery::Create([
-            'path' => 'uploads/gallerys/gallery1.jpg',
+            'path' => 'uploads/gallerys/gallery1.png',
         ]);
 
         Gallery::Create([
@@ -22,23 +22,53 @@ class DatabaseGallerySeeder extends Seeder
         ]);
 
         Gallery::Create([
-            'path' => 'uploads/gallerys/gallery3.jpg',
+            'path' => 'uploads/gallerys/gallery3.png',
         ]);
 
         Gallery::Create([
-            'path' => 'uploads/gallerys/gallery4.jpg',
+            'path' => 'uploads/gallerys/gallery4.png',
         ]);
 
         Gallery::Create([
-            'path' => 'uploads/gallerys/gallery5.jpg',
+            'path' => 'uploads/gallerys/gallery5.png',
         ]);
 
         Gallery::Create([
-            'path' => 'uploads/gallerys/gallery6.jpg',
+            'path' => 'uploads/gallerys/gallery6.png',
         ]);
 
         Gallery::Create([
-            'path' => 'uploads/gallerys/gallery7.jpg',
+            'path' => 'uploads/gallerys/gallery7.png',
         ]);
+
+        Gallery::Create([
+            'path' => 'uploads/gallerys/gallery8.jpg',
+        ]);
+
+        Gallery::Create([
+            'path' => 'uploads/gallerys/gallery9.png',
+        ]);
+
+        Gallery::Create([
+            'path' => 'uploads/gallerys/gallery10.png',
+        ]);
+
+        Gallery::Create([
+            'path' => 'uploads/gallerys/gallery11.png',
+        ]);
+
+        Gallery::Create([
+            'path' => 'uploads/gallerys/gallery12.png',
+        ]);
+
+        Gallery::Create([
+            'path' => 'uploads/gallerys/gallery13.png',
+        ]);
+
+        Gallery::Create([
+            'path' => 'uploads/gallerys/gallery14.png',
+        ]);
+
+
     }
 }

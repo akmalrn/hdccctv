@@ -21,6 +21,9 @@ class DatabaseSeeder extends Seeder
             DatabaseGallerySeeder::class,
             DatabaseMitraSeeder::class,
             DatabaseContactSeeder::class,
+            DatabaseTestimonialSeeder::class,
+            DatabaseAboutUsSeeder::class,
+            DatabaseServicesSeeder::class,
         ]);
     }
 }

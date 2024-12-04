@@ -25,13 +25,20 @@ class SuperiorityController extends Controller
         $request->validate([
             'title' => 'required|string|max:255',
             'description' => 'required|string',
-            'icon' => 'required|string',
+            'path' => 'required',
         ]);
+
+        $imageName = null;
+
+        if ($request->hasFile('path')) {
+            $file = $request->file('path');
+            $imageName = time() . '_' . $file->getClientOriginalName();
+            $file->move(('uploads/superioritys'), $imageName);
+        }
 
         Superiority::create([
             'title' => $request->title,
             'description' => $request->description,
-            'icon' => $request->icon,
         ]);
 
         return redirect()->route('superiority.index')->with('success', 'Data saved successfully.');
