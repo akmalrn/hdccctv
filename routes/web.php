@@ -30,10 +30,6 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/admin-dashboard/about-us', [App\Http\Controllers\admin\AboutUsController::class, 'index'])->name('about-us.index');
     Route::post('/admin-dashboard/about-us', [App\Http\Controllers\admin\AboutUsController::class, 'storeOrUpdate'])->name('about-us.store');
 
-    //why us
-    Route::get('/admin-dashboard/why-us', [App\Http\Controllers\admin\WhyUsController::class, 'index'])->name('why-us.index');
-    Route::post('/admin-dashboard/why-us', [App\Http\Controllers\admin\WhyUsController::class, 'storeOrUpdate'])->name('why-us.store');
-
     //Contact
     Route::get('/admin-dashboard/contacts', [App\Http\Controllers\admin\ContactController::class, 'index'])->name('contacts.index');
     Route::post('/admin-dashboard/contacts', [App\Http\Controllers\admin\ContactController::class, 'storeOrUpdate'])->name('contacts.store');

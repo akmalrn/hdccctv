@@ -192,14 +192,6 @@
                             </a>
                         </li>
 
-                        <li class="nav-item {{ Request::is('admin-dashboard/why-us') ? 'active' : '' }}">
-                            <a href="{{ route('why-us.index') }}">
-                                <i class="fas fa-thumbs-up"></i>
-                                <p>apartment features</p>
-                                <span class="badge badge-secondary"></span>
-                            </a>
-                        </li>
-
                         <li class="nav-item {{ Request::is('admin-dashboard/services', 'admin-dashboard/services/create', 'admin-dashboard/services/*/edit', 'admin-dashboard/categories-services/create',  'admin-dashboard/categories-services/*/edit') ? 'active' : '' }}">
                             <a href="{{ route('services.index') }}">
                                 <i class="fas fa-hand-holding"></i>
