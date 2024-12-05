@@ -108,7 +108,7 @@
                 <a href="#services" class="nav-item nav-link">Layanan</a>
                 <a href="#gallery" class="nav-item nav-link">Galeri</a>
                 <a href="https://wa.me/{{ $contact->phone_number }}" target="blank"
-                    class="nav-item nav-link">Kontak</a>
+                    class="nav-item nav-link">Hubungi Kami</a>
             </div>
             <div class="h-100 d-lg-inline-flex align-items-center d-none">
                 @if ($contact->phone_number)
@@ -166,8 +166,6 @@
                                     <p class="fs-5 text-white mb-4 pb-2">{{ $slider->overview }}</p>
                                     <a href="https://wa.me/{{ $contact->phone_number }}" target="blank"
                                         class="btn btn-primary rounded-pill py-md-3 px-md-5 me-3 animated slideInLeft">Hubungi</a>
-                                    <a href="{{ $contact->email_address ?? '' }}" target="blank"
-                                        class="btn btn-light rounded-pill py-md-3 px-md-5 animated slideInRight">Email</a>
                                 </div>
                             </div>
                         </div>
@@ -192,9 +190,16 @@
                     <div class="p-lg-5 pe-lg-0">
                         <div class="bg-primary mb-3" style="width: 60px; height: 2px;"></div>
                         <h1 class="display-5 mb-4">Tentang Kami</h1>
-                        <p class="mb-4 pb-2">{!! $about->description ?? '' !!}</p>
-                        <div class="row g-4 mb-4 pb-3">
-                            <div class="col-sm-6 wow fadeIn" data-wow-delay="0.3s">
+                        <p class="mb-4 pb-2">{!! $about->overview ?? '' !!}</p>
+                        <div class="row g-4 pb-3">
+                            <div class="col wow fadeIn" data-wow-delay="0.1s">
+                                <div class="d-flex align-items-center">
+                                    <div class="btn-square bg-white rounded-circle" style="width: 64px; height: 64px;">
+                                    </div>
+                                    <div class="mb-4">
+                                        {!! $about->description ?? '' !!}
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <a href="https://wa.me/{{ $contact->phone_number ?? '' }}" target="blank"
@@ -232,7 +237,7 @@
     <!-- Facts Start -->
 
     <!-- Service Start -->
-    <div class="swiper services-slider">
+    <div class="swiper services-slider" id="services">
         <div class="swiper-wrapper">
             @foreach ($services as $service)
                 <div class="swiper-slide">
@@ -500,8 +505,8 @@
         <div class="container py-5">
             <div class="row g-5">
                 <div class="col col-md">
-                    <h5 class="text-light mb-4">{{ $about->description ?? '' }}</h5>
-                    <div class="position-relative w-100">
+                    <p class="text-light text-center mb-4">{!! $about->overview ?? '' !!}</p>
+                    <div class="position-relative text-center w-100">
                         <iframe src="{{ $contact->map ?? '' }}" frameborder="0"></iframe>
                     </div>
                 </div>
@@ -511,7 +516,7 @@
                     <a class="btn btn-link" href="#about">Tentang</a>
                     <a class="btn btn-link" href="#services">Layanan</a>
                     <a class="btn btn-link" href="#gallery">Galeri</a>
-                    <a class="btn btn-link" href="https://wa.me/{{ $contact->phone_number ?? '' }}">Kontak</a>
+                    <a class="btn btn-link" href="https://wa.me/{{ $contact->phone_number ?? '' }}">Hubungi Kami</a>
                 </div>
 
                 <div class="col col-md">
